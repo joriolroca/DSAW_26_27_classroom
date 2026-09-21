@@ -103,30 +103,6 @@ boto.addEventListener("click", () => {
 });
 ```
 
-#### Exemple 2. Un comptador de clics
-
-Ara el codi guarda un valor (l'estat) i actualitza la pàgina cada vegada que canvia.
-
-```html
-<!-- index.html -->
-<p>Has premut el botó <span id="comptador">0</span> vegades.</p>
-<button id="boto">Suma 1</button>
-<script src="js/app.js" defer></script>
-```
-
-```js
-// js/app.js
-const comptador = document.getElementById("comptador");
-const boto = document.getElementById("boto");
-
-let clics = 0;   // estat: només existeix al navegador, el servidor no en sap res
-
-boto.addEventListener("click", () => {
-  clics++;                           // 1. actualitzem l'estat
-  comptador.textContent = clics;     // 2. reflectim l'estat al DOM
-});
-```
-
 ### 1.2 Característiques del llenguatge
 
 | Característica | Descripció | Conseqüència pràctica |
