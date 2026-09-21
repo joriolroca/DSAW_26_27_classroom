@@ -305,8 +305,8 @@ for (let i = 2; i = 10; i + 2) {
 | **Depuració** | Troba els tres errors de l'exercici 10 | En troba un o dos | No identifica cap error |
 
 ---
-
-## Solució
+<details>
+<summary><strong> Solució</strong></summary>
 
 ### Exercici 1
 
@@ -561,5 +561,5 @@ for (let i = 2; i <= 10; i += 2) {
 > **Compte:** si executes el codi incorrecte, el navegador es quedarà penjat. Tanca la pestanya per aturar-lo.
 
 ---
-
+</details>
 
