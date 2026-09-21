@@ -2,6 +2,8 @@
 > **DSAW**  **RA2** - **INTRODUCCIÓ A JAVASCRIPT**
 >
 > **Mòdul**: Client (0612)
+>
+> **Estat**: **Revisat** 
 
 
 # Introducció a JavaScript i integració amb l'HTML
@@ -103,17 +105,6 @@ boto.addEventListener("click", () => {
 });
 ```
 
-#### Exemple 2. Un comptador de clics
-
-Ara el codi guarda un valor (l'estat) i actualitza la pàgina cada vegada que canvia.
-
-```html
-<!-- index.html -->
-<p>Has premut el botó <span id="comptador">0</span> vegades.</p>
-<button id="boto">Suma 1</button>
-<script src="js/app.js" defer></script>
-```
-
 ```js
 // js/app.js
 const comptador = document.getElementById("comptador");
@@ -151,7 +142,7 @@ ECMAScript és l'estàndard; JavaScript n'és la implementació. Des del 2015 se
 
 | Versió | Any | Novetats que es fan servir en aquesta RA |
 | :--- | :---: | :--- |
-| ES5 | 2009 | `var`, mode estricte |
+| ES5 | 2009 | Mode estricte, `JSON`, mètodes d'array (`forEach`, `map`...) |
 | ES6 / ES2015 | 2015 | `let`, `const`, *template strings*, `for...of`, funcions fletxa |
 | ES2020 | 2020 | `BigInt`, encadenament opcional `?.`, fusió nul·la `??` |
 
@@ -175,7 +166,7 @@ El codi JavaScript s'incorpora al document HTML amb l'etiqueta `<script>`. Hi ha
   console.log("Hola des d'un script intern");
 </script>
 
-<!-- 3. JavaScript EXTERN en un fitxer a part. La opció que hauriem d'utilitzar -->
+<!-- 3. JavaScript EXTERN en un fitxer a part. L'opció que hauríem d'utilitzar -->
 <script src="js/app.js" defer></script>
 ```
 
@@ -213,7 +204,7 @@ titol.textContent = "Bon dia!";
   <h1 id="titol">Hola</h1>
 </body>
 ```
-El fluxe d'execució és:
+El flux d'execució és:
 
 ```mermaid
 flowchart LR

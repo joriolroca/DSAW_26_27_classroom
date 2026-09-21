@@ -2,6 +2,8 @@
 > **DSAW**  **RA2** - **SINTAXI DE JAVASCRIPT**
 >
 > **Mòdul**: Client (0612)
+>
+> **Estat**: **En revisió** 
 
 
 # Escriure sentències simples amb JavaScript
@@ -33,10 +35,6 @@ En acabar aquesta unitat has de ser capaç de:
 8. [Sentències de decisió](#8-sentències-de-decisió)
 9. [Bucles](#9-bucles)
 10. [Comentaris i documentació del codi](#10-comentaris-i-documentació-del-codi)
-11. [Eines de programació, prova i depuració](#11-eines-de-programació-prova-i-depuració)
-
-[Annex: criteris d'avaluació](#annex-criteris-davaluació)
-
 
 ---
 
@@ -152,7 +150,7 @@ let comptador = 3;
 Una variable declarada fora de qualsevol funció i de qualsevol bloc és global, i per tant accessible des de tot el fitxer.
 
 ```js
-const NOM_APP = "Joc del penjat";   // àmbit global
+const NOM_APP = "Encerta el número";   // àmbit global
 
 function mostrarTitol() {
   console.log(NOM_APP);             // accedeix a la variable global
@@ -328,54 +326,33 @@ Mètodes més utilitzats:
 | `Number.isInteger()` | Comprova si el valor és un enter | `Number.isInteger(5.0)` | `true` |
 | `Number.isNaN()` | Comprova si el valor és `NaN` | `Number.isNaN(NaN)` | `true` |
 
-> **Compte:** `NaN` no és igual a cap valor, ni a si mateix: `NaN === NaN` retorna `false`. L'única comprovació fiable és `Number.isNaN(valor)`.
+> **Compte:** `NaN` és una forma d'indicar que no és un number.
 
-#### Com saber si un valor és un número
 
-Hi ha dues funcions: `isNaN()` i `Number.isNaN()`, i la diferència és si converteixen el valor abans de comprovar-lo.
 
-| | `isNaN(valor)` | `Number.isNaN(valor)` |
-| :--- | :--- | :--- |
-| Des de quan | Sempre ha existit | Afegida a ES6 (2015) |
-| Què fa primer | **Converteix** el valor a número | **No** converteix res |
-| Què respon | Si el resultat de convertir-lo és `NaN` | Si el valor **ja és** exactament `NaN` |
-| Pregunta que respon | "Això no es pot interpretar com un número?" | "Això és el valor `NaN`?" |
+La manera correcta de comprovar si un valor conté un número és **convertir-lo primer a number i comprovar el resultat després**:
 
 ```js
-// isNaN converteix primer: respon sobre el resultat de la conversió
-isNaN("hola");        // true,  perquè Number("hola") és NaN
-isNaN("42");          // false, perquè Number("42") és 42
-isNaN("");            // false, perquè Number("") és 0. Compte!
-isNaN(null);          // false, perquè Number(null) és 0. Compte!
-isNaN(true);          // false, perquè Number(true) és 1
-isNaN(undefined);     // true,  perquè Number(undefined) és NaN
+//Cas en el que donaria que és un number
+let valor = 1.1;
 
-// Number.isNaN no converteix: només és cert per al valor NaN
-Number.isNaN("hola"); // false. El text "hola" no és el valor NaN
-Number.isNaN("");     // false
-Number.isNaN(NaN);    // true
-```
+let valorNumber = Number(valor);
 
-> **Compte:** `Number.isNaN("hola")` retorna `false`. No vol dir que "hola" sigui un número: vol dir que "hola" no és el valor `NaN`, sinó una cadena de text. Esperar-hi un `true` és l'error més freqüent.
-
-La manera correcta de comprovar si un text escrit per l'usuari conté un número és **convertir-lo primer i comprovar el resultat després**:
-
-```js
-const text = document.getElementById("edat").value;
-const numero = Number(text);
-
-// Correcte
-if (text === "" || Number.isNaN(numero)) {
-  alert("Has d'introduir un número");
+if(Number.isNaN(valorNumber)){
+    console.log("El valor no és un number");
 }
-```
+else{ console.log("El valor és un number")}
 
-```js
-// Incorrecte: sempre serà fals, perquè un text mai no és el valor NaN
-if (Number.isNaN(text)) { }
 
-// Incorrecte: deixa passar la cadena buida, perquè Number("") val 0
-if (isNaN(text)) { }
+//Cas en el que donaria que NO és un number
+let valor = "hola";
+
+let valorNumber = Number(valor);
+
+if(Number.isNaN(valorNumber)){
+    console.log("El valor no és un number");
+}
+else{ console.log("El valor és un number")}
 ```
 
 Les altres comprovacions disponibles, `Number.isInteger()` i `Number.isFinite()`, tampoc no converteixen: només responen `true` si el valor ja és del tipus `number`.
@@ -391,13 +368,12 @@ Number.isFinite(Infinity); // false
 Number.isFinite("42");     // false, no converteix
 isFinite("42");            // true,  la versió antiga sí que converteix
 
-typeof NaN;                // "number", NaN és de tipus número tot i el seu nom
 ```
 
 
 > **Recorda:** fes servir sempre les versions amb el prefix `Number.` i converteix tu el valor abans de comprovar-lo. Les versions globals `isNaN()` i `isFinite()` converteixen pel seu compte i amaguen el que realment està passant.
 
-> Font: [MDN – Number.isNaN()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN)
+> Font: [MDN – Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)
 
 
 ### 3.3 `String`
@@ -408,9 +384,11 @@ const text1 = 'Hello JS';                 // cometes simples
 const text2 = "Hello JavaScript";         // cometes dobles
 const text3 = `Hello ${text1}`;           // template string, amb accent greu
 
-// Com a objecte, d'ús poc habitual
-const text4 = String("Hello JS");
-const text5 = new String("Hello JavaScript");
+// String() sense new converteix a cadena i retorna un primitiu
+const text4 = String(42);                 // "42", typeof 'string'
+
+// Només amb new es crea un objecte. No s'utilitza a la pràctica
+const text5 = new String("Hello JavaScript");   // typeof 'object'
 ```
 
 Caràcters especials:
@@ -540,14 +518,6 @@ console.log(String(null));       // "null"
 console.log((42).toString());    // "42"
 ```
 
-> **Nota:** el valor d'un element `<input>` sempre és una cadena, encara que l'usuari hi escrigui un número. Per operar-hi cal convertir-lo:
-> ```js
-> const text = document.getElementById("edat").value;
-> const edat = Number(text);
-> if (text === "" || Number.isNaN(edat)) {   // Number("") val 0: cal descartar la cadena buida
->   alert("Has d'introduir un número");
-> }
-> ```
 
 ### 4.2 Conversió implícita
 
@@ -664,10 +634,6 @@ console.log(edat < 18 || teCarnet);    // true
 console.log(!teCarnet);                // false
 ```
 
-> **Nota:** els operadors lògics apliquen avaluació de curtcircuit: `&&` s'atura a la primera condició falsa i `||` a la primera certa. Això permet escriure valors per defecte de manera compacta:
-> ```js
-> const nom = nomUsuari || "Convidat";   // si nomUsuari és falsy, "Convidat"
-> ```
 
 ### 5.6 Operador ternari
 
@@ -682,27 +648,8 @@ const missatge = (edat >= 18) ? "Pots passar" : "Ets menor d'edat";
 
 > **Compte:** fes servir l'operador ternari només per a condicions simples. Si cal encadenar-ne diversos, una sentència `if...else` és més llegible.
 
-### 5.7 Encadenament opcional i fusió nul·la
 
-| Operador | Nom | Funció |
-| :---: | :--- | :--- |
-| `?.` | Encadenament opcional | Accedeix a una propietat només si l'objecte existeix |
-| `??` | Fusió nul·la | Retorna el valor de la dreta només si el de l'esquerra és `null` o `undefined` |
-
-```js
-const usuari = { nom: "Marta", adreca: null };
-
-console.log(usuari.adreca?.carrer);       // undefined, en lloc de TypeError
-console.log(usuari.nom ?? "Anònim");      // "Marta"
-console.log(usuari.sobrenom ?? "Anònim"); // "Anònim"
-
-// Diferència amb l'operador ||
-const punts = 0;
-console.log(punts || 10);   // 10, perquè 0 és falsy
-console.log(punts ?? 10);   // 0, perquè 0 no és null ni undefined
-```
-
-### 5.8 Precedència
+### 5.7 Precedència
 
 Les operacions s'avaluen en un ordre determinat. Els parèntesis el modifiquen i milloren la llegibilitat.
 
@@ -721,28 +668,20 @@ console.log(5 > 3 === true); // true
 
 Tot valor de JavaScript té un equivalent booleà: es pot convertir a `true` o a `false`. És un concepte clau per escriure condicions, perquè permet comprovar amb una sola expressió si una variable està declarada, informada o buida.
 
-> **Recorda:** només hi ha vuit valors *falsy*: `false`, `0`, `-0`, `0n`, `""`, `null`, `undefined` i `NaN`. Tota la resta són *truthy*.
+> Hi ha vuit valors *falsy*: `false`, `0`, `-0`, `0n`, `""`, `null`, `undefined` i `NaN`. Tota la resta són *truthy*.
 
-```js
-if ("0")      { }   // S'executa: una cadena amb contingut és truthy
-if ([])       { }   // S'executa: un array buit és truthy
-if ({})       { }   // S'executa: un objecte buit és truthy
-if (" ")      { }   // S'executa: un espai és contingut
-if (0)        { }   // No s'executa
-if ("")       { }   // No s'executa
-```
 
-| Valor | Descripció | És *truthy* quan | És *falsy* quan |
-| :--- | :--- | :--- | :--- |
-| `undefined` | La variable no té cap valor assignat | `let numProd = 1;`<br/>`if (numProd) { }`<br/>`if (numProd !== undefined) { }` | `let numProd;`<br/>`if (numProd) {`<br/>&nbsp;&nbsp;`console.log("Està definida");`<br/>`} else {`<br/>&nbsp;&nbsp;`console.log("NO està definida"); // resultat`<br/>`}` |
-| `0` | El valor numèric de la variable és 0 | `let numProd = 1;`<br/>`if (numProd) { }`<br/>`if (numProd !== 0) { }` | `let numProd = 0;`<br/>`if (numProd) {`<br/>&nbsp;&nbsp;`console.log("Està definida");`<br/>`} else {`<br/>&nbsp;&nbsp;`console.log("NO està definida"); // resultat`<br/>`}` |
-| `""` | El valor de la variable és la cadena buida | `let nom = "Marta";`<br/>`if (nom) { }`<br/>`if (nom !== "") { }` | `let nom = "";`<br/>`if (nom) {`<br/>&nbsp;&nbsp;`console.log("Està definida");`<br/>`} else {`<br/>&nbsp;&nbsp;`console.log("No té valor"); // resultat`<br/>`}` |
-| `NaN` | La variable conté un valor que no és un número però es tracta com a tal | `const numProd = 1;`<br/>`if (!Number.isNaN(numProd)) { }`<br/>`if (numProd > 0) { }` | `const numProducte = "Computer";`<br/>`if (numProducte > 0) {`<br/>&nbsp;&nbsp;`console.log("És un número");`<br/>`} else {`<br/>&nbsp;&nbsp;`console.log("NO és un número"); // resultat`<br/>`}` |
-| `null` | La variable està definida però buida de manera intencionada | `const numProd = 3;`<br/>`if (numProd) { }`<br/>`if (numProd !== null) { }` | `const numProd = null;`<br/>`if (numProd) {`<br/>&nbsp;&nbsp;`console.log("Té un valor");`<br/>`} else {`<br/>&nbsp;&nbsp;`console.log("NO té valor"); // resultat`<br/>`}` |
+
+| Valor | Descripció |  És *falsy* quan |
+| :--- | :--- | :--- |
+| `undefined` | La variable no té cap valor assignat | `let numProd;`<br/>`if (numProd) {`<br/>&nbsp;&nbsp;`console.log("Està definida");`<br/>`} else {`<br/>&nbsp;&nbsp;`console.log("NO està definida"); // resultat`<br/>`}` |
+| `0` | El valor numèric de la variable és 0 | `let numProd = 0;`<br/>`if (numProd) {`<br/>&nbsp;&nbsp;`console.log("Té valor");`<br/>`} else {`<br/>&nbsp;&nbsp;`console.log("No té valor"); // resultat`<br/>`}` |
+| `""` | El valor de la variable és la cadena buida | `let nom = "";`<br/>`if (nom) {`<br/>&nbsp;&nbsp;`console.log("Té valor");`<br/>`} else {`<br/>&nbsp;&nbsp;`console.log("No té valor"); // resultat`<br/>`}` |
+| `NaN` | La variable conté el resultat d'una operació o conversió numèrica que no ha donat un número vàlid |  `const numProd = Number("Computer"); // NaN`<br/>`if (numProd) {`<br/>&nbsp;&nbsp;`console.log("És un número");`<br/>`} else {`<br/>&nbsp;&nbsp;`console.log("No és un número"); // resultat`<br/>`}` |
+| `null` | La variable està definida però buida de manera intencionada | `const numProd = null;`<br/>`if (numProd) {`<br/>&nbsp;&nbsp;`console.log("Té un valor");`<br/>`} else {`<br/>&nbsp;&nbsp;`console.log("NO té valor"); // resultat`<br/>`}` |
 
 > Font: [MDN – Falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy)
 
-> **Compte:** un array buit `[]` i un objecte buit `{}` són *truthy*. Per saber si un array està buit cal comprovar-ne la llargada: `if (llista.length === 0) { }`.
 
 
 ---
@@ -791,21 +730,6 @@ Les sentències de decisió permeten executar un bloc de codi o un altre segons 
 
 ### 8.1 `if`, `else` i `else if`
 
-```mermaid
-flowchart TB
-    I["Inici"] --> C{"L'expressió<br/>és certa?"}
-    C -- " sí " --> T["instruccions_si_true"]
-    C -- " no " --> F["instruccions_si_false"]
-    T --> FI["Continua el programa"]
-    F --> FI
-
-    classDef cond fill:#fff9db,stroke:#f08c00,stroke-width:2px,color:#000
-    classDef blk fill:#e7f5ff,stroke:#1971c2,stroke-width:2px,color:#000
-    classDef neu fill:#f1f3f5,stroke:#868e96,stroke-width:2px,color:#000
-    class C cond
-    class T,F blk
-    class I,FI neu
-```
 
 ```js
 // Sentència if sense else
@@ -832,7 +756,6 @@ if (nota >= 9) {
 }
 ```
 
-> **Compte:** en un `if...else if` l'ordre és determinant. Les condicions s'avaluen de dalt a baix i l'execució s'atura a la primera que és certa. Si la condició `nota >= 5` es col·loqués en primer lloc, un 9 també la compliria i mai no s'arribaria a "Excel·lent".
 
 > **Recorda:** escriu sempre les claus `{ }`, encara que el bloc tingui una sola instrucció. Això evita errors quan més endavant s'hi afegeix una segona línia.
 
@@ -840,24 +763,6 @@ if (nota >= 9) {
 
 Quan es compara una mateixa variable amb diversos valors concrets, `switch` resulta més llegible que un `if...else if` llarg.
 
-```mermaid
-flowchart TB
-    S["switch (expressió)"] --> C1{"coincideix<br/>amb valor1?"}
-    C1 -- " sí " --> B1["instruccions<br/>break"]
-    C1 -- " no " --> C2{"coincideix<br/>amb valor2?"}
-    C2 -- " sí " --> B2["instruccions2<br/>break"]
-    C2 -- " no " --> D["default<br/>instruccions_else"]
-    B1 --> FI["Surt del switch"]
-    B2 --> FI
-    D --> FI
-
-    classDef cond fill:#fff9db,stroke:#f08c00,stroke-width:2px,color:#000
-    classDef blk fill:#e7f5ff,stroke:#1971c2,stroke-width:2px,color:#000
-    classDef neu fill:#f1f3f5,stroke:#868e96,stroke-width:2px,color:#000
-    class C1,C2 cond
-    class B1,B2,D blk
-    class S,FI neu
-```
 
 ```js
 switch (expressio) {
@@ -896,14 +801,7 @@ switch (dia) {
 console.log(nomDia);
 ```
 
-> **Compte:** sense la instrucció `break`, l'execució continua cap al `case` següent i s'executen tots els blocs posteriors. Aquest comportament s'anomena *fall-through* i de vegades s'utilitza de manera intencionada, com al `case 0: case 6:` de l'exemple.
-
-| | `if...else if` | `switch` |
-| :--- | :--- | :--- |
-| Compara | Qualsevol condició, inclosos rangs i operadors lògics | Igualtat estricta amb valors concrets |
-| Llegibilitat | Millor amb poques condicions o amb rangs | Millor amb molts valors discrets |
-| Exemple típic | `if (nota >= 5)` | `switch (codiError)` |
-
+> **Compte:** sense la instrucció `break`, l'execució continua cap al `case` següent i s'executen tots els blocs posteriors.
 
 ---
 
@@ -917,24 +815,6 @@ Un bucle repeteix un bloc d'instruccions mentre es compleix una condició.
 for (valor_inicial; condició; increment_o_decrement) {
   // instruccions
 }
-```
-
-```mermaid
-flowchart TB
-    A["1. Inicialització<br/>let i = 0"] --> B{"2. Condició<br/>i menor que total?"}
-    B -- " certa " --> C["3. Cos del bucle<br/>instruccions"]
-    C --> D["4. Increment<br/>i++"]
-    D --> B
-    B -- " falsa " --> E["Surt del bucle"]
-
-    classDef ini fill:#e7f5ff,stroke:#1971c2,stroke-width:2px,color:#000
-    classDef cond fill:#fff9db,stroke:#f08c00,stroke-width:2px,color:#000
-    classDef body fill:#ebfbee,stroke:#2f9e44,stroke-width:2px,color:#000
-    classDef fi fill:#f1f3f5,stroke:#868e96,stroke-width:2px,color:#000
-    class A,D ini
-    class B cond
-    class C body
-    class E fi
 ```
 
 ```js
@@ -997,27 +877,6 @@ do {
 } while (j < 10);
 ```
 
-```mermaid
-flowchart TB
-    subgraph W["while"]
-        W1{"condició?"} -- " certa " --> W2["cos del bucle"]
-        W2 --> W1
-        W1 -- " falsa " --> W3["surt"]
-    end
-    subgraph D["do...while"]
-        D1["cos del bucle"] --> D2{"condició?"}
-        D2 -- " certa " --> D1
-        D2 -- " falsa " --> D3["surt"]
-    end
-
-    classDef cond fill:#fff9db,stroke:#f08c00,stroke-width:2px,color:#000
-    classDef body fill:#ebfbee,stroke:#2f9e44,stroke-width:2px,color:#000
-    classDef fi fill:#f1f3f5,stroke:#868e96,stroke-width:2px,color:#000
-    class W1,D2 cond
-    class W2,D1 body
-    class W3,D3 fi
-```
-
 > **Recorda:** el cos d'un `do...while` s'executa com a mínim una vegada, perquè la condició es comprova al final. El d'un `while` pot no executar-se cap vegada.
 
 ### 9.4 Quin bucle triar
@@ -1071,4 +930,5 @@ Un comentari és text que el navegador ignora i que serveix perquè una persona 
 
 const IVA = 0.21;   // també pot anar al final d'una línia de codi
 ```
+
 
