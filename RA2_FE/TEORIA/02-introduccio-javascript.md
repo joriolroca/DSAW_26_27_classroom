@@ -307,8 +307,6 @@ Això té dues conseqüències:
 
 Per aquest motiu `async` només s'utilitza en scripts totalment independents, que no accedeixen ni al document ni a la resta de fitxers del projecte: estadístiques de visites, publicitat o xats de suport.
 
-> **Nota:** en aquest mòdul no es fa servir `async`. El codi de les activitats sempre necessita el document construït i, per tant, sempre requereix `defer`.
-
 #### Resum dels quatre casos
 
 | Com s'escriu | Quan es descarrega | Quan s'executa | Pot provocar error de `null` | Quan fer-ho servir |
