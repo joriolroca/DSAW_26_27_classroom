@@ -326,7 +326,7 @@ Mètodes més utilitzats:
 | `Number.isInteger()` | Comprova si el valor és un enter | `Number.isInteger(5.0)` | `true` |
 | `Number.isNaN()` | Comprova si el valor és `NaN` | `Number.isNaN(NaN)` | `true` |
 
-> **Compte:** `NaN` és una forma d'indicar que no és un number.
+> NaN és un valor especial del tipus number que representa el resultat d'una operació numèrica que no té un resultat vàlid.
 
 
 
