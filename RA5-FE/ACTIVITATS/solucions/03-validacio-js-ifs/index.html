@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo 3 - Validació amb JavaScript i ifs</title>
+  <link rel="stylesheet" href="../../assets/pagina.css">
+  <link rel="stylesheet" href="estils.css">
+  <!-- Només serveix perquè el botó de mode fosc de la pàgina de l'enunciat canviï també aquesta demo -->
+  <script src="../../assets/tema.js"></script>
+</head>
+<body>
+  <p class="llegenda">* Camp obligatori</p>
+
+  <!-- Cap atribut de validació (required, pattern...): tota la validació és al script.js -->
+  <form id="form-registre" novalidate>
+    <div class="camp">
+      <label class="obligatori" for="usuari">Nom d'usuari</label>
+      <span class="ajuda" id="ajuda-usuari">Entre 3 i 15 caràcters: lletres, números i _</span>
+      <input type="text" id="usuari" name="usuari" aria-describedby="ajuda-usuari error-usuari">
+      <span class="missatge-error" id="error-usuari" aria-live="polite"></span>
+    </div>
+    <div class="camp">
+      <label class="obligatori" for="email">Correu electrònic</label>
+      <input type="email" id="email" name="email" placeholder="nom@exemple.cat" aria-describedby="error-email">
+      <span class="missatge-error" id="error-email" aria-live="polite"></span>
+    </div>
+    <div class="camp">
+      <label class="obligatori" for="password">Contrasenya</label>
+      <span class="ajuda" id="ajuda-password">Mínim 8 caràcters i almenys un número</span>
+      <input type="password" id="password" name="password" aria-describedby="ajuda-password error-password">
+      <span class="missatge-error" id="error-password" aria-live="polite"></span>
+    </div>
+    <div class="camp">
+      <label class="obligatori" for="password2">Repetir contrasenya</label>
+      <input type="password" id="password2" name="password2" aria-describedby="error-password2">
+      <span class="missatge-error" id="error-password2" aria-live="polite"></span>
+    </div>
+    <div class="camp">
+      <label class="opcio obligatori"><input type="checkbox" id="condicions" name="condicions" aria-describedby="error-condicions"> Accepto les condicions d'ús</label>
+      <span class="missatge-error" id="error-condicions" aria-live="polite"></span>
+    </div>
+    <button type="submit">Crear compte</button>
+    <p id="resultat" aria-live="polite"></p>
+  </form>
+
+  <script src="script.js"></script>
+</body>
+</html>

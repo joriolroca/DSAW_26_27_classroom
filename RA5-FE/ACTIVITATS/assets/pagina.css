@@ -1,0 +1,77 @@
+/* ============================================================
+   ESTILS GENERALS DE LA PÀGINA (comuns a totes les activitats)
+   Colors del tema clar/fosc, tipografia i enllaços. Els fan servir
+   tant les pàgines d'enunciat com les solucions dels formularis.
+   ============================================================ */
+
+/* Colors del tema clar (per defecte) i del tema fosc (segons el sistema o el botó de la pàgina). */
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --fg: #212529;
+  --muted: #495057;
+  --border: #868e96;
+  --input-bg: #ffffff;
+  --enun-bg: #e7f5ff;
+  --enun-border: #1971c2;
+  --th-bg: #d0ebff;
+  --code-bg: #ffffff;
+  --nota-bg: #fff9db;
+  --nota-border: #f08c00;
+  --error: #c92a2a;
+  --error-bg: #fff5f5;
+  --error-outline: #ffa8a8;
+  --ok: #2b8a3e;
+  --link: #1864ab;
+  --btn-bg: #f1f3f5;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #16181d;
+  --fg: #e9ecef;
+  --muted: #adb5bd;
+  --border: #6c757d;
+  --input-bg: #21252b;
+  --enun-bg: #17283a;
+  --enun-border: #4dabf7;
+  --th-bg: #1f3a56;
+  --code-bg: #0f1114;
+  --nota-bg: #3a3012;
+  --nota-border: #f59f00;
+  --error: #ff8787;
+  --error-bg: #3a1c1c;
+  --error-outline: #c92a2a;
+  --ok: #69db7c;
+  --link: #74c0fc;
+  --btn-bg: #2b3038;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #16181d;
+    --fg: #e9ecef;
+    --muted: #adb5bd;
+    --border: #6c757d;
+    --input-bg: #21252b;
+    --enun-bg: #17283a;
+    --enun-border: #4dabf7;
+    --th-bg: #1f3a56;
+    --code-bg: #0f1114;
+    --nota-bg: #3a3012;
+    --nota-border: #f59f00;
+    --error: #ff8787;
+    --error-bg: #3a1c1c;
+    --error-outline: #c92a2a;
+    --ok: #69db7c;
+    --link: #74c0fc;
+    --btn-bg: #2b3038;
+  }
+}
+
+/* Fons, text i tipografia de tota la pàgina. */
+body { font-family: system-ui, sans-serif; line-height: 1.5; background: var(--bg); color: var(--fg); margin: 0; padding: 0.5rem 1rem 1rem; }
+
+/* Enllaços. */
+a { color: var(--link); }

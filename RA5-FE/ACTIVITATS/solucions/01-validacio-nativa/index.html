@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo 1 - Validació nativa</title>
+  <link rel="stylesheet" href="../../assets/pagina.css">
+  <link rel="stylesheet" href="estils.css">
+  <!-- Només serveix perquè el botó de mode fosc de la pàgina de l'enunciat canviï també aquesta demo -->
+  <script src="../../assets/tema.js"></script>
+</head>
+<body>
+  <!-- Només atributs HTML. L'únic script és per simular l'enviament correcte. -->
+  <p class="llegenda">* Camp obligatori</p>
+  <form id="f" action="#" method="get">
+    <div class="camp">
+      <label class="obligatori" for="nom">Nom</label>
+      <input type="text" id="nom" name="nom" required minlength="2" maxlength="30"
+             pattern="[\p{L} ]{2,30}" title="Només lletres i espais, entre 2 i 30 caràcters" placeholder="John Doe">
+    </div>
+    <div class="camp">
+      <label class="obligatori" for="email">Correu electrònic</label>
+      <input type="email" id="email" name="email" required title="Un correu amb el format nom@domini.cat" placeholder="nom@exemple.cat">
+    </div>
+    <div class="camp">
+      <label class="obligatori" for="edat">Edat</label>
+      <input type="number" id="edat" name="edat" required min="14" max="99" step="1" title="Un número enter entre 14 i 99" placeholder="16">
+    </div>
+    <div class="camp">
+      <label for="web">Pàgina web o blog (opcional)</label>
+      <input type="url" id="web" name="web" title="Una URL completa, com https://exemple.cat" placeholder="https://exemple.cat">
+    </div>
+    <div class="camp">
+      <label class="obligatori" for="genere">Gènere preferit</label>
+      <select id="genere" name="genere" required>
+        <option value="">Tria un gènere...</option>
+        <option value="novella">Novel·la</option>
+        <option value="poesia">Poesia</option>
+        <option value="assaig">Assaig</option>
+        <option value="comic">Còmic</option>
+      </select>
+    </div>
+    <div class="camp">
+      <label for="mobil">Telèfon mòbil (opcional, 9 dígits)</label>
+      <input type="text" id="mobil" name="mobil" inputmode="numeric" pattern="[67]\d{8}" title="9 dígits que comencin per 6 o 7" placeholder="612345678">
+    </div>
+    <div class="camp">
+      <label class="opcio obligatori"><input type="checkbox" id="normes" name="normes" required> Accepto les normes del club</label>
+    </div>
+    <button type="submit">Apuntar-me</button>
+    <p id="resultat" aria-live="polite"></p>
+  </form>
+
+  <script src="script.js"></script>
+</body>
+</html>

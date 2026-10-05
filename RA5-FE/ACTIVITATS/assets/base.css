@@ -1,0 +1,36 @@
+/* ===== Estils de les pàgines d'enunciat (enunciat, barra superior, demo) ===== */
+@import url("pagina.css");
+
+/* La pàgina d'enunciat és una columna centrada. */
+body { max-width: 860px; margin: 0 auto; padding: 1rem; }
+
+/* Barra superior: tornar a l'índex + canvi de tema */
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.topbar a, .topbar button, .btn-index {
+  display: inline-block; padding: 0.35rem 0.8rem; border: 1px solid var(--border); border-radius: 6px;
+  background: var(--btn-bg); color: var(--fg); text-decoration: none; font: inherit; font-size: 0.9rem; cursor: pointer;
+}
+.topbar a:hover, .topbar button:hover, .btn-index:hover { border-color: var(--enun-border); }
+.peu { margin-top: 2rem; }
+
+/* Enunciat */
+.enunciat { background: var(--enun-bg); border-left: 5px solid var(--enun-border); padding: 0.5rem 1.2rem 1rem; border-radius: 6px; }
+.enunciat h2 { margin-bottom: 0.3rem; }
+.enunciat table, table.taula { border-collapse: collapse; width: 100%; background: var(--bg); }
+.enunciat th, .enunciat td, table.taula th, table.taula td { border: 1px solid var(--border); padding: 0.35rem 0.6rem; text-align: left; vertical-align: top; }
+.enunciat th, table.taula th { background: var(--th-bg); }
+code { background: var(--code-bg); padding: 0 0.25rem; border-radius: 3px; }
+.nota { background: var(--nota-bg); border-left: 5px solid var(--nota-border); padding: 0.4rem 1rem; margin-top: 1rem; }
+
+/* Demo del comportament esperat */
+.demo { margin-top: 1.5rem; border: 2px solid var(--ok); border-radius: 6px; padding: 0.5rem 1.2rem 1.2rem; }
+.demo h2 { color: var(--ok); }
+.demo iframe { width: 100%; height: 520px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); }
+
+/* Blocs de codi per copiar */
+.punt-partida { margin-top: 1.5rem; }
+.codi { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 1rem; }
+.codi-barra { display: flex; justify-content: space-between; align-items: center; padding: 0.3rem 0.6rem; background: var(--th-bg); font-size: 0.85rem; font-weight: 600; }
+.codi-barra button { padding: 0.2rem 0.7rem; border: 1px solid var(--border); border-radius: 4px; background: var(--btn-bg); color: var(--fg); font: inherit; font-size: 0.85rem; cursor: pointer; }
+.codi pre { margin: 0; padding: 0.8rem; overflow-x: auto; max-height: 28rem; background: var(--code-bg); }
+.codi pre code { background: none; padding: 0; font-size: 0.85rem; }

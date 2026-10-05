@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo 5 - Expressions regulars</title>
+  <link rel="stylesheet" href="../../assets/pagina.css">
+  <link rel="stylesheet" href="estils.css">
+  <!-- Només serveix perquè el botó de mode fosc de la pàgina de l'enunciat canviï també aquesta demo -->
+  <script src="../../assets/tema.js"></script>
+</head>
+<body>
+  <form id="form-comanda" novalidate>
+    <div class="camp">
+      <label for="nom">Nom i cognoms <span class="marca" id="marca-nom" aria-hidden="true"></span></label>
+      <input type="text" id="nom" name="nom" autocomplete="name" aria-describedby="error-nom">
+      <span class="missatge-error" id="error-nom"></span>
+    </div>
+    <div class="camp">
+      <label for="cp">Codi postal <span class="marca" id="marca-cp" aria-hidden="true"></span></label>
+      <span class="ajuda">5 dígits</span>
+      <input type="text" id="cp" name="cp" inputmode="numeric" aria-describedby="error-cp">
+      <span class="missatge-error" id="error-cp"></span>
+    </div>
+    <div class="camp">
+      <label for="telefon">Telèfon mòbil <span class="marca" id="marca-telefon" aria-hidden="true"></span></label>
+      <span class="ajuda">9 dígits que comencin per 6 o 7, amb prefix +34 opcional</span>
+      <input type="text" id="telefon" name="telefon" inputmode="tel" aria-describedby="error-telefon">
+      <span class="missatge-error" id="error-telefon"></span>
+    </div>
+    <div class="camp">
+      <label for="dni">DNI <span class="marca" id="marca-dni" aria-hidden="true"></span></label>
+      <span class="ajuda">8 números i una lletra majúscula</span>
+      <input type="text" id="dni" name="dni" maxlength="9" aria-describedby="error-dni">
+      <span class="missatge-error" id="error-dni"></span>
+    </div>
+    <div class="camp">
+      <label for="email">Correu electrònic <span class="marca" id="marca-email" aria-hidden="true"></span></label>
+      <input type="email" id="email" name="email" aria-describedby="error-email">
+      <span class="missatge-error" id="error-email"></span>
+    </div>
+
+    <div id="errors-final" class="resum" tabindex="-1" role="alert"></div>
+
+    <button type="submit">Confirmar dades</button>
+    <p id="resultat" aria-live="polite"></p>
+  </form>
+
+  <script src="script.js"></script>
+</body>
+</html>

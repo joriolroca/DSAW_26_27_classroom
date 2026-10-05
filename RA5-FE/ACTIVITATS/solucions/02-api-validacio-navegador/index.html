@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo 2 - API de validació del navegador</title>
+  <link rel="stylesheet" href="../../assets/pagina.css">
+  <link rel="stylesheet" href="estils.css">
+  <!-- defer: s'executa quan tota la pàgina està carregada, per això pot anar al <head> -->
+  <script src="script.js" defer></script>
+  <!-- Només serveix perquè el botó de mode fosc de la pàgina de l'enunciat canviï també aquesta demo -->
+  <script src="../../assets/tema.js"></script>
+</head>
+<body>
+  <p class="llegenda">* Camp obligatori</p>
+
+  <!-- novalidate: el navegador no mostra els seus missatges; els mostra el nostre JavaScript. -->
+  <form id="form-alta" novalidate>
+    <div class="camp">
+      <label class="obligatori" for="nom">Nom</label>
+      <input type="text" id="nom" name="nom" required pattern="[\p{L} ]{2,30}" placeholder="John Doe">
+      <span class="missatge-error" id="error-nom" aria-live="polite"></span>
+    </div>
+    <div class="camp">
+      <label class="obligatori" for="email">Correu electrònic</label>
+      <input type="email" id="email" name="email" required placeholder="nom@exemple.cat">
+      <span class="missatge-error" id="error-email" aria-live="polite"></span>
+    </div>
+    <div class="camp">
+      <label class="obligatori" for="edat">Edat</label>
+      <input type="number" id="edat" name="edat" required min="14" max="99" placeholder="16">
+      <span class="missatge-error" id="error-edat" aria-live="polite"></span>
+    </div>
+    <div class="camp">
+      <label class="obligatori" for="genere">Gènere preferit</label>
+      <select id="genere" name="genere" required>
+        <option value="">Tria un gènere...</option>
+        <option value="novella">Novel·la</option>
+        <option value="poesia">Poesia</option>
+        <option value="assaig">Assaig</option>
+        <option value="comic">Còmic</option>
+      </select>
+      <span class="missatge-error" id="error-genere" aria-live="polite"></span>
+    </div>
+    <div class="camp">
+      <label class="opcio obligatori"><input type="checkbox" id="normes" name="normes" required> Accepto les normes del club</label>
+      <span class="missatge-error" id="error-normes" aria-live="polite"></span>
+    </div>
+    <button type="submit">Apuntar-me</button>
+    <p id="resultat" aria-live="polite"></p>
+  </form>
+</body>
+</html>

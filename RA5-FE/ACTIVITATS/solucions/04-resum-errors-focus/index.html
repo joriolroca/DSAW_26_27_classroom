@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo 4 - Resum d'errors</title>
+  <link rel="stylesheet" href="../../assets/pagina.css">
+  <link rel="stylesheet" href="estils.css">
+  <!-- Només serveix perquè el botó de mode fosc de la pàgina de l'enunciat canviï també aquesta demo -->
+  <script src="../../assets/tema.js"></script>
+</head>
+<body>
+  <form id="form-contacte" novalidate>
+    <div id="resum-errors" class="resum" tabindex="-1" role="alert"></div>
+
+    <div class="camp">
+      <label for="nom">Nom i cognoms</label>
+      <input type="text" id="nom" name="nom" required minlength="3" aria-describedby="error-nom">
+      <span class="missatge-error" id="error-nom"></span>
+    </div>
+    <div class="camp">
+      <label for="email">Correu electrònic</label>
+      <input type="email" id="email" name="email" required aria-describedby="error-email">
+      <span class="missatge-error" id="error-email"></span>
+    </div>
+    <div class="camp">
+      <label for="assumpte">Assumpte</label>
+      <select id="assumpte" name="assumpte" required aria-describedby="error-assumpte">
+        <option value="">Tria un assumpte...</option>
+        <option value="dubte">Tinc un dubte</option>
+        <option value="incidencia">Vull comunicar una incidència</option>
+        <option value="suggeriment">Suggeriment</option>
+      </select>
+      <span class="missatge-error" id="error-assumpte"></span>
+    </div>
+    <fieldset id="via-contacte" aria-describedby="error-via">
+      <legend>Com vols que et contactem?</legend>
+      <label class="opcio"><input type="radio" id="via-correu" name="via" value="correu"> Per correu</label>
+      <label class="opcio"><input type="radio" id="via-telefon" name="via" value="telefon"> Per telèfon</label>
+      <span class="missatge-error" id="error-via"></span>
+    </fieldset>
+    <div class="camp" id="bloc-telefon" hidden>
+      <label for="telefon">Telèfon (9 dígits)</label>
+      <input type="text" id="telefon" name="telefon" inputmode="numeric" disabled aria-describedby="error-telefon">
+      <span class="missatge-error" id="error-telefon"></span>
+    </div>
+    <div class="camp">
+      <label for="missatge">Missatge</label>
+      <textarea id="missatge" name="missatge" rows="4" required minlength="20" maxlength="300" aria-describedby="comptador error-missatge"></textarea>
+      <small id="comptador">0 / 300</small>
+      <span class="missatge-error" id="error-missatge"></span>
+    </div>
+    <button type="submit">Enviar missatge</button>
+    <p id="resultat" aria-live="polite"></p>
+  </form>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+/* ============================================================
+   ESTILS DEL FORMULARI
+   Com es veuen els camps, els errors i els estats de validació.
+   (Colors, tipografia i tema fosc: assets/pagina.css)
+   ============================================================ */
+
+/* Cada camp (etiqueta + control + error) és un bloc amb una mica de separació respecte l'anterior. */
+.camp { margin-top: 0.8rem; }
+
+/* Les etiquetes (i les llegendes dels grups) ocupen la seva línia i van en negreta, perquè quedi clar a quin camp pertanyen. */
+label, legend { display: block; font-weight: 600; }
+
+/* Camps de text, correu, número, data..., llistes i àrees de text: ocupen tota l'amplada i adopten els colors del tema.
+   Les caselles (checkbox) i els radio s'exclouen perquè han de mantenir la seva mida natural. */
+input:not([type="checkbox"]):not([type="radio"]), select, textarea {
+  width: 100%; box-sizing: border-box; padding: 0.4rem; font-size: 1rem;
+  border: 1px solid var(--border); border-radius: 4px; background: var(--input-bg); color: var(--fg);
+}
+
+/* Etiquetes de caselles i radios: text normal (no negreta) i en línia, un al costat de l'altre. */
+.opcio { font-weight: normal; display: inline-block; margin-right: 1rem; }
+
+/* Camps obligatoris: les etiquetes amb la classe "obligatori" mostren un asterisc vermell al final.
+   La classe s'afegeix a mà a l'etiqueta de cada camp obligatori: <label class="obligatori">. */
+.obligatori::after {
+  content: " *";
+  color: var(--error);
+}
+
+/* Llegenda de l'asterisc, a sobre del formulari. */
+.llegenda {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* Botó d'enviar. */
+button { margin-top: 1rem; padding: 0.5rem 1.2rem; font-size: 1rem; background: var(--btn-bg); color: var(--fg); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; }
+
+/* Text d'ajuda sota l'etiqueta (format esperat). Color atenuat i més petit; no és un error. */
+.ajuda { color: var(--muted); display: block; font-size: 0.85rem; }
+
+/* Espai on es mostra l'error d'un camp. Té alçada mínima reservada (min-height) perquè el formulari no "salti" quan apareix el missatge.
+   Amb la classe .ok el mateix espai mostra el "✔ Correcte" en verd. */
+.missatge-error { color: var(--error); display: block; font-size: 0.85rem; min-height: 1.2em; }
+.missatge-error.ok { color: var(--ok); }
+
+/* Camp amb error (classe afegida per JavaScript): vora més gruixuda i de color, perquè no depengui només del color.
+   El !important guanya a la vora normal dels camps. Amb el focus s'afegeix una ombra perquè el focus continuï visible. */
+.invalid { border: 2px solid var(--error) !important; }
+.invalid:focus { outline: 3px solid var(--error-outline); }
+
+/* Camp correcte (classe afegida per JavaScript): vora gruixuda verda. */
+.valid { border: 2px solid var(--ok) !important; }
+
+/* Missatge de confirmació quan el formulari s'ha enviat bé. */
+#resultat { margin-top: 1rem; font-weight: 600; color: var(--ok); }

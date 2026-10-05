@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Activitat 1 - Validació nativa amb HTML</title>
+  <link rel="stylesheet" href="assets/base.css">
+  <script src="assets/tema.js"></script>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="index.html">← Tornar a l'índex</a>
+  <button type="button" id="tema-toggle">🌙 Mode fosc</button>
+</nav>
+
+<header>
+  <p><small>DSAW · RA5 · Formularis i validació · Activitat 1 de 6</small></p>
+  <h1>Alta al club de lectura</h1>
+</header>
+
+<section class="enunciat">
+  <h2>Objectiu</h2>
+  <p>
+    Aconseguir que el navegador validi el formulari d'alta d'un club de lectura <strong>sense escriure ni una línia de JavaScript</strong>,
+    només amb els atributs de validació de l'HTML (apartat 2 de la teoria).
+  </p>
+
+  <h2>Què has de fer</h2>
+  <p>Crea un formulari com el de la demostració (mateixos camps) i fes que el navegador validi aquestes regles:</p>
+  <table>
+    <thead><tr><th>Camp</th><th>Regles</th></tr></thead>
+    <tbody>
+      <tr><td>Nom</td><td>Obligatori. Entre 2 i 30 caràcters. Només lletres i espais (<code>pattern</code>).</td></tr>
+      <tr><td>Correu electrònic</td><td>Obligatori i amb format de correu (Ha de contenir una @).</td></tr>
+      <tr><td>Edat</td><td>Obligatori. Número enter entre 14 i 99.</td></tr>
+      <tr><td>Pàgina web o blog</td><td>Opcional, però si s'omple ha de ser una URL vàlida.</td></tr>
+      <tr><td>Gènere preferit</td><td>Obligatori: no es pot deixar l'opció «Tria un gènere...».</td></tr>
+      <tr><td>Telèfon mòbil</td><td>Opcional, però si s'omple ha de ser exactament 9 dígits que comencin per 6 o 7 (<code>pattern</code>).</td></tr>
+      <tr><td>Accepto les normes</td><td>La casella ha d'estar marcada per poder enviar.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Requisits</h2>
+  <ol>
+    <li>Cada camp que tingui regles ha de tenir un <code>title</code> que expliqui quin format s'espera, i un <code>placeholder</code> d'exemple on tingui sentit.</li>
+    <li>El camp del telèfon mòbil ha d'obrir el teclat numèric en un mòbil (<code>inputmode</code>).</li>
+    <li><strong>No</strong> es pot posar <code>novalidate</code> ni cap <code>&lt;script&gt;</code>.</li>
+    <li>Un cop validat, el formulari ha de continuar el seu enviament normal (<code>action="#"</code>).</li>
+  </ol>
+
+  <h2>Prova-ho</h2>
+  <p>Intenta enviar el formulari buit, amb un correu sense <code>@</code>, amb l'edat 13, amb un nom amb números i amb la casella sense marcar. Comprova que el navegador no l'envia en cap cas.</p>
+
+</section>
+
+<!-- ===== COMPORTAMENT ESPERAT (demo) ===== -->
+<section class="demo">
+  <h2>Així ha de funcionar</h2>
+  <p>Aquest és un formulari de mostra ja acabat. Prova'l i fixa't en el comportament: el teu ha de fer el mateix. Només amb atributs HTML: prova d'enviar-lo buit, amb un correu sense @, amb edat 13...</p>
+  <iframe src="solucions/01-validacio-nativa/index.html" title="Demo del comportament esperat" style="height:600px"></iframe>
+</section>
+
+<!-- ===== PUNT DE PARTIDA PER COPIAR ===== -->
+<section class="punt-partida">
+  <h2>Punt de partida</h2>
+  <p>
+    Si vols, copia aquest HTML i aquest CSS per no haver d'escriure el formulari des de zero. Desa'ls en una carpeta
+    com a <code>index.html</code> i <code>estils.css</code>. L'HTML <strong>no té els <code>type</code> ni les validacions</strong>:
+    els comentaris <code>TODO</code> expliquen què ha de complir cada camp i ho has d'afegir tu. El CSS ja està acabat.
+  </p>
+  <div class="codi">
+    <div class="codi-barra"><span>index.html</span><button type="button" class="copia" data-copia="codi-html">Copiar</button></div>
+    <pre><code id="codi-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="ca"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Alta al club de lectura&lt;/title&gt;
+  &lt;link rel="stylesheet" href="estils.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Alta al club de lectura&lt;/h1&gt;
+
+  &lt;!-- Les etiquetes amb class="obligatori" mostren un asterisc (veure estils.css). --&gt;
+  &lt;p class="llegenda"&gt;* Camp obligatori&lt;/p&gt;
+
+  &lt;!-- action="#" fa que, si el formulari és vàlid, la pàgina simplement es torni a carregar.
+       No s'hi pot posar novalidate: volem que sigui el navegador qui validi. --&gt;
+  &lt;form action="#" method="get"&gt;
+
+    &lt;!-- NOM
+         TODO: ha de ser un camp de text. Obligatori, entre 2 i 30 caràcters, només lletres i espais
+         (cal una expressió regular). Afegeix-hi també un title que expliqui el format i un placeholder d'exemple. --&gt;
+    &lt;div class="camp"&gt;
+      &lt;label class="obligatori" for="nom"&gt;Nom&lt;/label&gt;
+      &lt;input id="nom" name="nom"&gt;
+    &lt;/div&gt;
+
+    &lt;!-- CORREU
+         TODO: ha de ser un camp de correu electrònic (tria el type adequat) i és obligatori.
+         Afegeix-hi un title i un placeholder d'exemple. --&gt;
+    &lt;div class="camp"&gt;
+      &lt;label class="obligatori" for="email"&gt;Correu electrònic&lt;/label&gt;
+      &lt;input id="email" name="email"&gt;
+    &lt;/div&gt;
+
+    &lt;!-- EDAT
+         TODO: ha de ser un camp numèric i és obligatori. Només s'accepten números enters entre 14 i 99.
+         Afegeix-hi un title. --&gt;
+    &lt;div class="camp"&gt;
+      &lt;label class="obligatori" for="edat"&gt;Edat&lt;/label&gt;
+      &lt;input id="edat" name="edat"&gt;
+    &lt;/div&gt;
+
+    &lt;!-- PÀGINA WEB
+         TODO: ha de ser un camp d'adreça web. NO és obligatori, però si s'omple ha de ser una URL vàlida.
+         Afegeix-hi un title i un placeholder d'exemple. --&gt;
+    &lt;div class="camp"&gt;
+      &lt;label for="web"&gt;Pàgina web o blog (opcional)&lt;/label&gt;
+      &lt;input id="web" name="web"&gt;
+    &lt;/div&gt;
+
+    &lt;!-- GÈNERE PREFERIT
+         TODO: és obligatori. La primera opció («Tria un gènere...») té el valor buit a propòsit:
+         si no se'n tria cap altra, el navegador ha de considerar que el camp està buit. --&gt;
+    &lt;div class="camp"&gt;
+      &lt;label class="obligatori" for="genere"&gt;Gènere preferit&lt;/label&gt;
+      &lt;select id="genere" name="genere"&gt;
+        &lt;option value=""&gt;Tria un gènere...&lt;/option&gt;
+        &lt;option value="novella"&gt;Novel·la&lt;/option&gt;
+        &lt;option value="poesia"&gt;Poesia&lt;/option&gt;
+        &lt;option value="assaig"&gt;Assaig&lt;/option&gt;
+        &lt;option value="comic"&gt;Còmic&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+
+    &lt;!-- TELÈFON MÒBIL
+         TODO: camp de text. NO és obligatori, però si s'omple ha de tenir exactament 9 dígits i començar per 6 o 7
+         (cal una expressió regular). Afegeix-hi un title, un placeholder d'exemple i fes que en un mòbil
+         s'obri el teclat numèric (atribut inputmode). --&gt;
+    &lt;div class="camp"&gt;
+      &lt;label for="mobil"&gt;Telèfon mòbil (opcional, 9 dígits)&lt;/label&gt;
+      &lt;input id="mobil" name="mobil"&gt;
+    &lt;/div&gt;
+
+    &lt;!-- NORMES
+         TODO: ha de ser una casella de selecció (checkbox) i ha d'estar marcada per poder enviar el formulari. --&gt;
+    &lt;div class="camp"&gt;
+      &lt;label class="opcio obligatori"&gt;&lt;input id="normes" name="normes"&gt; Accepto les normes del club&lt;/label&gt;
+    &lt;/div&gt;
+
+    &lt;!-- El botó dins d'un formulari ja és de tipus «submit» per defecte. --&gt;
+    &lt;button&gt;Apuntar-me&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+  </div>
+  <div class="codi">
+    <div class="codi-barra"><span>estils.css</span><button type="button" class="copia" data-copia="codi-css">Copiar</button></div>
+    <pre><code id="codi-css">/* ===== PÀGINA ===== */
+
+/* Tipografia, columna centrada de 480px de màxim i una mica d'aire als costats (també en mòbil). */
+body {
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+  max-width: 480px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+
+/* ===== FORMULARI ===== */
+
+/* Cada camp (etiqueta + control) és un bloc separat de l'anterior. */
+.camp {
+  margin-top: 1rem;
+}
+
+/* L'etiqueta ocupa la seva línia, en negreta, i queda just a sobre del camp. */
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+/* Tots els camps (text, número, llista...) ocupen tota l'amplada, amb farciment i vora arrodonida.
+   box-sizing: border-box fa que el farciment i la vora no facin el camp més ample que el 100%.
+   La casella de selecció s'exclou perquè ha de mantenir la seva mida natural. */
+input:not([type="checkbox"]),
+select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #868e96;
+  border-radius: 4px;
+}
+
+/* L'etiqueta de la casella: text normal (no negreta) i en línia amb la casella. */
+label.opcio {
+  display: inline;
+  font-weight: normal;
+}
+
+/* Quan un camp té el focus, es mostra una vora de color blau perquè l'usuari vegi on està escrivint.
+   Mai s'ha de treure el focus sense posar-ne un altre: el teclat deixaria de ser usable. */
+input:focus,
+select:focus {
+  outline: 3px solid #74c0fc;
+  outline-offset: 1px;
+}
+
+/* ESTATS DE VALIDACIÓ
+   El navegador activa pseudoclasses segons si el valor d'un camp compleix les seves regles:
+   - :invalid / :valid -> s'apliquen des del primer moment. Un camp obligatori buit quedaria en vermell
+     abans que l'usuari hagi escrit res, i això molesta.
+   - :user-invalid / :user-valid -> el mateix, però només DESPRÉS que l'usuari hagi interactuat amb el camp
+     (hi ha escrit, n'ha sortit o ha intentat enviar el formulari). És la que s'ha de fer servir.
+   Cada regla pinta una vora gruixuda (2px) del color de l'estat: així no depèn només del color
+   (pensant en el daltonisme).
+
+   :not(...) -> exclou els elements que compleixen el que hi ha entre parèntesis.
+   input:not([type="checkbox"]) vol dir "tots els input que NO són caselles de selecció".
+   S'exclouen perquè una casella amb vora de 2px es veuria malament.
+   A més, cada :not(...) compta per a l'especificitat de la regla. Aquí es repeteix el mateix :not(...)
+   que a la regla dels camps perquè les dues regles tinguin la mateixa especificitat i, en anar després,
+   guanyi aquesta. Si no, la vora grisa del camp guanyaria i no es veuria el vermell. */
+input:user-invalid:not([type="checkbox"]),
+select:user-invalid {
+  border: 2px solid #c92a2a;
+}
+
+input:user-valid:not([type="checkbox"]),
+select:user-valid {
+  border: 2px solid #2b8a3e;
+}
+
+/* Camps obligatoris: les etiquetes amb la classe "obligatori" mostren un asterisc vermell al final.
+   La classe s'afegeix a mà a l'etiqueta de cada camp obligatori: <label class="obligatori">. */
+.obligatori::after {
+  content: " *";
+  color: #c92a2a;
+}
+
+/* Llegenda de l'asterisc, a sobre del formulari. */
+.llegenda {
+  font-size: 0.85rem;
+  color: #495057;
+}
+
+/* Botó d'enviar: més gran i amb el cursor de mà. */
+button {
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.4rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+</code></pre>
+  </div>
+</section>
+
+<!-- ===== REPÀS DE TEORIA ===== -->
+<section class="enunciat" style="margin-top:1.5rem">
+  <h2>Repàs de teoria</h2>
+
+  <h3>Per què importa el <code>type</code></h3>
+  <p>
+    L'atribut <code>type</code> de l'<code>&lt;input&gt;</code> diu al navegador <strong>quin tipus de dada</strong> s'espera. Si no se'n posa cap, el camp és
+    de text (<code>type="text"</code>) i el navegador accepta qualsevol cosa. Triar-ne el correcte aporta tres coses sense escriure codi:
+  </p>
+  <ul>
+    <li><strong>Validació automàtica del format:</strong> un <code>type="email"</code> rebutja un valor sense <code>@</code>; un <code>type="number"</code> només admet números.</li>
+    <li><strong>Teclat adequat al mòbil:</strong> s'obre el teclat numèric, el del correu (amb <code>@</code>), etc.</li>
+    <li><strong>Controls propis:</strong> els números tenen fletxes, les dates un calendari, i les caselles es poden marcar.</li>
+  </ul>
+  <p>Els <code>type</code> d'aquest formulari:</p>
+  <table>
+    <thead><tr><th>Camp</th><th><code>type</code></th><th>Per què</th></tr></thead>
+    <tbody>
+      <tr><td>Nom</td><td><code>text</code></td><td>És text lliure. El format (només lletres i espais) es comprova amb <code>pattern</code>.</td></tr>
+      <tr><td>Correu electrònic</td><td><code>email</code></td><td>Comprova que tingui forma de correu (<code>nom@domini</code>) i mostra el teclat amb <code>@</code> al mòbil.</td></tr>
+      <tr><td>Edat</td><td><code>number</code></td><td>Només admet números i permet <code>min</code>, <code>max</code> i <code>step</code> (que no serveixen en un camp de text).</td></tr>
+      <tr><td>Pàgina web</td><td><code>url</code></td><td>Exigeix una adreça completa, amb protocol (<code>https://...</code>).</td></tr>
+      <tr><td>Telèfon mòbil</td><td><code>text</code> + <code>inputmode</code></td><td>Es fa servir <code>text</code> perquè un <code>number</code> admetria decimals i signes. <code>inputmode="numeric"</code> només canvia el teclat, no valida res: la validació la fa <code>pattern</code>.</td></tr>
+      <tr><td>Normes</td><td><code>checkbox</code></td><td>Casella que es marca o no; amb <code>required</code> ha d'estar marcada.</td></tr>
+    </tbody>
+  </table>
+  <p>
+    El <code>&lt;select&gt;</code> no porta <code>type</code>. Recorda que <code>type</code> comprova el <strong>format</strong>, no que el camp
+    estigui omplert: un correu buit és «vàlid» si no té <code>required</code>.
+  </p>
+
+  <h3>Els estats de validació amb CSS: <code>:user-invalid</code>, <code>:user-valid</code> i <code>:not()</code></h3>
+  <table>
+    <thead><tr><th>Selector</th><th>Què fa</th></tr></thead>
+    <tbody>
+      <tr><td><code>:invalid</code> / <code>:valid</code></td><td>S'activen <strong>des del primer moment</strong>. Un camp obligatori buit sortiria en vermell abans que l'usuari hagi escrit res.</td></tr>
+      <tr><td><code>:user-invalid</code> / <code>:user-valid</code></td><td>El mateix, però <strong>només després que l'usuari hagi interactuat</strong> amb el camp (hi ha escrit, n'ha sortit o ha intentat enviar el formulari). Són els que cal fer servir.</td></tr>
+      <tr><td><code>:not(...)</code></td><td>Exclou el que coincideix amb el que hi ha entre parèntesis. <code>input:not([type="checkbox"])</code> són «tots els <code>input</code> menys les caselles».</td></tr>
+    </tbody>
+  </table>
+  <p>
+    Fixa't que un mateix camp pot tenir una vora per defecte, una altra quan té el focus i una altra quan és invàlid. Quan dues regles afecten
+    la mateixa propietat, <strong>guanya la més específica</strong> (i, si empaten, la que va després al CSS). Cada <code>:not(...)</code> o pseudoclasse compta
+    per a l'especificitat, i per això la regla de <code>:user-invalid</code> del CSS del punt de partida repeteix el mateix <code>:not(...)</code> que la regla dels camps.
+  </p>
+</section>
+
+<script src="assets/copia.js"></script>
+
+<p class="peu"><a class="btn-index" href="index.html">← Tornar a l'índex</a></p>
+
+</body>
+</html>
