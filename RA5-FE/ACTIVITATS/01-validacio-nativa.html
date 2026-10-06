@@ -16,7 +16,7 @@
 </nav>
 
 <header>
-  <p><small>DSAW · RA5 · Formularis i validació · Activitat 1 de 6</small></p>
+  <p><small>DSAW · RA5 · Formularis i validació · Activitat 1 de 5</small></p>
   <h1>Alta al club de lectura</h1>
 </header>
 
@@ -297,8 +297,7 @@ button {
   <table>
     <thead><tr><th>Selector</th><th>Què fa</th></tr></thead>
     <tbody>
-      <tr><td><code>:invalid</code> / <code>:valid</code></td><td>S'activen <strong>des del primer moment</strong>. Un camp obligatori buit sortiria en vermell abans que l'usuari hagi escrit res.</td></tr>
-      <tr><td><code>:user-invalid</code> / <code>:user-valid</code></td><td>El mateix, però <strong>només després que l'usuari hagi interactuat</strong> amb el camp (hi ha escrit, n'ha sortit o ha intentat enviar el formulari). Són els que cal fer servir.</td></tr>
+      <tr><td><code>:user-invalid</code> / <code>:user-valid</code></td><td>Apliquen un estil al camp segons si és vàlid o no, però només després que l'usuari hi hagi interactuat: quan en surt després d'haver-ne canviat el valor o quan intenta enviar el formulari.</td></tr>
       <tr><td><code>:not(...)</code></td><td>Exclou el que coincideix amb el que hi ha entre parèntesis. <code>input:not([type="checkbox"])</code> són «tots els <code>input</code> menys les caselles».</td></tr>
     </tbody>
   </table>

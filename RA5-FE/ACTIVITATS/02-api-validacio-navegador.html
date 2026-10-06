@@ -15,16 +15,20 @@
 </nav>
 
 <header>
-  <p><small>DSAW · RA5 · Formularis i validació · Activitat 2 de 6</small></p>
+  <p><small>DSAW · RA5 · Formularis i validació · Activitat 2 de 5</small></p>
   <h1>Alta al club de lectura (amb l'API de validació)</h1>
 </header>
 
 <section class="enunciat">
   <h2>Objectiu</h2>
-  <p>
-    Fer un formulari d'alta amb 5 camps i validar-lo amb <strong>JavaScript</strong>, aprofitant l'<strong>API de validació del navegador</strong> (<code>checkValidity()</code> i <code>validity</code>).
-    El formulari porta <code>novalidate</code>: el navegador no mostra els seus missatges, els mostres tu. Quan es canvia un camp (<code>change</code>) es pinta de <strong>verd</strong> (correcte) o de <strong>vermell</strong> (amb error), i es torna a validar tot en enviar.
-  </p>
+  <p>Fer un formulari d'alta amb 5 camps, validat amb JavaScript. En acabar, hauràs après a:</p>
+  <ul>
+    <li>Validar el formulari amb l'<strong>API de validació del navegador</strong> (<code>checkValidity()</code> i <code>validity</code>), aprofitant els atributs de l'HTML.</li>
+    <li>Fer servir <code>novalidate</code>: el navegador no mostra els seus missatges, els mostres tu.</li>
+    <li>Escriure un <strong>missatge d'error propi</strong> per a cada cas, segons la regla que falla.</li>
+    <li>Pintar cada camp de <strong>verd</strong> (correcte) o de <strong>vermell</strong> (amb error) quan se'n canvia el valor (<code>change</code>).</li>
+    <li>Tornar a validar <strong>tots els camps</strong> en enviar el formulari i posar el focus al primer erroni.</li>
+  </ul>
 
   <h2>Regles de validació</h2>
   <p>Els atributs de validació de l'HTML (<code>required</code>, <code>pattern</code>, <code>min</code>...) <strong>ja venen posats</strong> al punt de partida: ara se'n treu partit amb JavaScript.</p>
@@ -42,10 +46,18 @@
   <h2>Què has de fer (a <code>script.js</code>)</h2>
   <p>El punt de partida ja porta <strong>el camp «nom» fet</strong> com a exemple. Tu has de fer el mateix amb els altres quatre camps.</p>
   <ol>
-    <li>Per a cada camp, escriu una funció (<code>validarEmail</code>, <code>validarEdat</code>, <code>validarGenere</code>, <code>validarNormes</code>) que el validi amb <code>camp.checkValidity()</code> i el pinti: si és vàlid, classe <code>valid</code> i el text «✔ Correcte» (verd); si no, classe <code>invalid</code> i el missatge d'error (vermell). Per saber <em>quin</em> error mostrar, comprova una a una les propietats de <code>camp.validity</code> amb <code>if</code> / <code>else if</code> (<code>valueMissing</code>, <code>patternMismatch</code>, <code>typeMismatch</code>, <code>rangeUnderflow</code>...), una per cada missatge.</li>
-    <li>Fes que cada camp es validi quan l'usuari en canvia el valor: esdeveniment <code>change</code>.</li>
-    <li>En <code>submit</code>: fes <code>preventDefault()</code>, valida <strong>tots</strong> els camps i, si n'hi ha algun d'invàlid, posa el <strong>focus al primer</strong> (sense esborrar el que l'usuari ha escrit). L'exemple del nom ja ho fa només per al nom: has d'ampliar-lo.</li>
-    <li>Si tot és correcte, mostra un missatge de benvinguda a <code>#resultat</code> i fes <code>form.reset()</code> (i treu els colors i els missatges).</li>
+    <li><strong>Agafa els elements.</strong> Per a cada camp (<code>#email</code>, <code>#edat</code>, <code>#genere</code>, <code>#normes</code>) i el seu element d'error (<code>#error-email</code>...), amb <code>document.querySelector</code>.</li>
+    <li><strong>Escriu una funció per camp:</strong> <code>validarEmail</code>, <code>validarEdat</code>, <code>validarGenere</code> i <code>validarNormes</code>, com la <code>validarNom</code> de l'exemple. Ha de retornar <code>true</code> si el camp és correcte i <code>false</code> si no.</li>
+    <li><strong>Comprova si el camp és vàlid</strong> amb <code>camp.checkValidity()</code>.</li>
+    <li><strong>Si és vàlid (verd):</strong> escriu «✔ Correcte» a l'element d'error i posa-li la classe <code>ok</code>; al camp, treu-li <code>invalid</code> i posa-li <code>valid</code> (amb <code>classList</code>).</li>
+    <li><strong>Si no és vàlid, escull el missatge:</strong> comprova una a una les propietats de <code>camp.validity</code> (<code>valueMissing</code>, <code>typeMismatch</code>, <code>rangeUnderflow</code>, <code>rangeOverflow</code>, <code>stepMismatch</code>...) amb <code>if</code> / <code>else if</code>, una per cada missatge de la taula.</li>
+    <li><strong>Pinta l'error (vermell):</strong> escriu el missatge a l'element d'error i treu-li la classe <code>ok</code>; al camp, treu-li <code>valid</code> i posa-li <code>invalid</code>.</li>
+    <li><strong>Valida en canviar el camp:</strong> afegeix a cada camp un <code>addEventListener("change", ...)</code> amb la seva funció.</li>
+    <li><strong>Amplia el <code>submit</code>:</strong> l'exemple del nom ja fa <code>event.preventDefault()</code> i valida només el nom. Fes-hi que es validin els 5 camps.</li>
+    <li><strong>Crida les 5 funcions</strong> i guarda què retorna cadascuna (<code>const emailOk = validarEmail();</code>...). S'han de cridar totes, també si alguna falla, perquè es pintin tots els camps.</li>
+    <li><strong>Posa el focus al primer camp que falla</strong>, seguint l'ordre del formulari (<code>camp.focus()</code>), i atura't amb <code>return</code>. No esborris el que l'usuari ha escrit.</li>
+    <li><strong>Si tot és correcte:</strong> mostra un missatge de benvinguda a <code>#resultat</code>.</li>
+    <li><strong>Neteja el formulari:</strong> <code>form.reset()</code>, i treu les classes i els missatges dels 5 camps.</li>
   </ol>
 
   <h2>Prova-ho</h2>
@@ -388,9 +400,7 @@ form.addEventListener("submit", (event) =&gt; {
   <h3>El CSS del punt de partida</h3>
   <p>
     A l'activitat 1 el navegador decidia quan un camp tenia l'estil d'invàlid (<code>:user-invalid</code>). Aquí ho decideix JavaScript, que posa les classes
-    <code>.invalid</code> (vermell) i <code>.valid</code> (verd). El CSS defineix com es veuen: vora gruixuda i de color (no depèn només del color, pensant en el daltonisme), amb <code>!important</code>
-    perquè la regla <code>input:not([type="checkbox"])</code> (amb el <code>:not()</code> que exclou la casella) és més específica que una classe sola.
-  </p>
+    <code>.invalid</code> (vermell) i <code>.valid</code> (verd). </p>
 </section>
 
 <script src="assets/copia.js"></script>

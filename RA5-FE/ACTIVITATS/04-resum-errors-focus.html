@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Activitat 4 - Resum d'errors i focus</title>
+  <link rel="stylesheet" href="assets/base.css">
+  <script src="assets/tema.js"></script>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="index.html">← Tornar a l'índex</a>
+  <button type="button" id="tema-toggle">🌙 Mode fosc</button>
+</nav>
+
+<header>
+  <p><small>DSAW · RA5 · Formularis i validació · Activitat 4 de 5</small></p>
+  <h1>Formulari de contacte</h1>
+</header>
+
+<section class="enunciat">
+  <h2>Objectiu</h2>
+  <p>Fer un formulari de contacte que, en enviar-lo amb errors, mostri un <strong>resum d'errors a l'inici</strong>. En acabar, hauràs après a:</p>
+  <ul>
+    <li><strong>Recollir tots els errors</strong>.</li>
+    <li>Mostrar un <strong>resum a l'inici del formulari</strong>, amb un enllaç per error que porta el focus al camp erroni (apartat 5 de la teoria).</li>
+    <li>Mostrar, a més, l'error <strong>al costat de cada camp</strong>.</li>
+    <li>Treballar amb <strong>botons d'opció</strong> (<em>radio</em>) i amb un <strong>camp condicional</strong> (el telèfon).</li>
+    <li>Validar cada camp amb els esdeveniments <code>blur</code> i <code>change</code>, i marcar els <strong>correctes de verd</strong> i els erronis de <strong>vermell</strong>, i fer que, en corregir un camp, el seu error <strong>desaparegui del resum</strong> en directe.</li>
+    <li>Fer un <strong>comptador de caràcters</strong> i fer-ho accessible (<code>aria-invalid</code>, focus).</li>
+  </ul>
+
+  <h2>Regles de validació</h2>
+  <table>
+    <thead><tr><th>Camp</th><th>Regles</th></tr></thead>
+    <tbody>
+      <tr><td>Nom i cognoms</td><td>Obligatori, mínim 3 caràcters (sense comptar els espais de l'inici i el final: fes servir <code>trim()</code>).</td></tr>
+      <tr><td>DNI o passaport</td><td>Obligatori. Ha de ser un <strong>DNI</strong> (8 números i una lletra majúscula, amb la lletra correcta: <code>"TRWAGMYFPDXBNJZSQVHLCKE"[numero % 23]</code>) <strong>o</strong> un <strong>passaport</strong> (3 lletres majúscules i 6 números, com <code>ABC123456</code>).</td></tr>
+      <tr><td>Correu</td><td>Obligatori i amb format correcte.</td></tr>
+      <tr><td>Assumpte</td><td>Cal triar una opció de la llista.</td></tr>
+      <tr><td>Com vols que et contactem</td><td>Cal triar una de les opcions (correu / telèfon) — <strong>botons d'opció</strong>.</td></tr>
+      <tr><td>Telèfon</td><td>Només és obligatori (i s'ha de validar el format de 9 dígits) si has triat «telèfon» com a via de contacte.</td></tr>
+      <tr><td>Missatge</td><td>Obligatori, entre 20 i 300 caràcters. Mostra un <strong>comptador de caràcters</strong> (<code>#comptador</code>) que s'actualitza mentre s'escriu.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="nota">
+    <strong>Repte opcional:</strong> mostra al resum «Hi ha 3 errors al formulari» (en singular quan només n'hi ha un) i el nombre ha d'actualitzar-se a mesura que es corregeixen.
+  </div>
+</section>
+
+<!-- ===== COMPORTAMENT ESPERAT (demo) ===== -->
+<section class="demo">
+  <h2>Així ha de funcionar</h2>
+  <p>Aquest és un formulari de mostra ja acabat. Prova'l i fixa't en el comportament: el teu ha de fer el mateix. Envia'l buit: apareix el resum a dalt amb enllaços. Tria «per telèfon» per veure el camp condicional.</p>
+  <iframe src="solucions/04-resum-errors-focus/index.html" title="Demo del comportament esperat" style="height:880px"></iframe>
+</section>
+
+<p class="peu"><a class="btn-index" href="index.html">← Tornar a l'índex</a></p>
+
+</body>
+</html>

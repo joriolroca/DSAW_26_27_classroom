@@ -15,12 +15,17 @@
 
     <div class="camp">
       <label for="nom">Nom i cognoms</label>
-      <input type="text" id="nom" name="nom" required minlength="3" aria-describedby="error-nom">
+      <input type="text" id="nom" name="nom" required minlength="3" placeholder="Jhon Doe" aria-describedby="error-nom">
       <span class="missatge-error" id="error-nom"></span>
     </div>
     <div class="camp">
+      <label for="identitat">DNI o passaport</label>
+      <input type="text" id="identitat" name="identitat" maxlength="9" placeholder="DNI (12345678Z) o passaport (ABC123456)" aria-describedby="error-identitat">
+      <span class="missatge-error" id="error-identitat"></span>
+    </div>
+    <div class="camp">
       <label for="email">Correu electrònic</label>
-      <input type="email" id="email" name="email" required aria-describedby="error-email">
+      <input type="email" id="email" name="email" required placeholder="nom@exemple.cat" aria-describedby="error-email">
       <span class="missatge-error" id="error-email"></span>
     </div>
     <div class="camp">
@@ -41,12 +46,12 @@
     </fieldset>
     <div class="camp" id="bloc-telefon" hidden>
       <label for="telefon">Telèfon (9 dígits)</label>
-      <input type="text" id="telefon" name="telefon" inputmode="numeric" disabled aria-describedby="error-telefon">
+      <input type="text" id="telefon" name="telefon" inputmode="numeric" disabled placeholder="612345678" aria-describedby="error-telefon">
       <span class="missatge-error" id="error-telefon"></span>
     </div>
     <div class="camp">
       <label for="missatge">Missatge</label>
-      <textarea id="missatge" name="missatge" rows="4" required minlength="20" maxlength="300" aria-describedby="comptador error-missatge"></textarea>
+      <textarea id="missatge" name="missatge" rows="4" required minlength="20" maxlength="300" placeholder="Escriu el teu missatge (entre 20 i 300 caràcters)" aria-describedby="comptador error-missatge"></textarea>
       <small id="comptador">0 / 300</small>
       <span class="missatge-error" id="error-missatge"></span>
     </div>

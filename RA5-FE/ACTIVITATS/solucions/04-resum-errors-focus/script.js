@@ -71,6 +71,15 @@ const form = document.querySelector("#form-contacte");
           if (camp.value.trim() === "") return "El nom i els cognoms són obligatoris";
           if (camp.value.trim().length < 3) return "El nom ha de tenir 3 caràcters com a mínim";
           return "";
+        case "identitat": {
+          const doc = camp.value.trim();
+          if (doc === "") return "El DNI o el passaport és obligatori";
+          if (/^[A-Z]{3}\d{6}$/.test(doc)) return "";                 // passaport: 3 lletres i 6 números
+          if (!/^\d{8}[A-Z]$/.test(doc)) return "Escriu un DNI (8 números i una lletra) o un passaport (3 lletres i 6 números)";
+          const lletres = "TRWAGMYFPDXBNJZSQVHLCKE";                   // és un DNI: es comprova la lletra
+          if (doc[8] !== lletres[Number(doc.slice(0, 8)) % 23]) return "La lletra del DNI no és correcta";
+          return "";
+        }
         case "email":
           if (camp.value.trim() === "") return "El correu és obligatori";
           if (camp.validity.typeMismatch) return "El format del correu no és correcte";
@@ -94,12 +103,22 @@ const form = document.querySelector("#form-contacte");
       return "";
     }
 
-    const campsValidables = () => [form.elements.nom, form.elements.email, form.elements.assumpte,
+    const campsValidables = () => [form.elements.nom, form.elements.identitat, form.elements.email, form.elements.assumpte,
                                    primerRadio, telefon, missatgeCamp];
 
+    // Pinta un camp: vermell amb el missatge si hi ha error, verd amb «✔ Correcte» si és correcte.
+    // El telèfon, mentre està desactivat (via correu), no es pinta de cap color.
+    function pintar(camp, m) {
+      if (camp.disabled) netejarCamp(camp);
+      else if (m) mostrarError(camp, m);
+      else mostrarOk(camp);
+    }
+
+    // Pinta el camp i, a més, el desa (o l'esborra) de la llista d'errors del resum
     function aplicar(camp, m) {
-      if (m) { mostrarError(camp, m); errorsMostrats.set(camp, m); }
-      else { netejarCamp(camp); errorsMostrats.delete(camp); }
+      pintar(camp, m);
+      if (camp.disabled || !m) errorsMostrats.delete(camp);
+      else errorsMostrats.set(camp, m);
     }
 
     function renderResum() {
@@ -107,17 +126,28 @@ const form = document.querySelector("#form-contacte");
       pintarLlista(resum, errors, textErrors(errors.length));
     }
 
-    // Quan es corregeix un camp, desapareix el seu error i s'actualitza el resum
-    function corregir(camp) {
-      if (errorsMostrats.has(camp)) { aplicar(camp, missatgeDe(camp)); renderResum(); }
+    // Valida UN camp i el pinta de verd o de vermell.
+    // Si el resum ja és a la pantalla, també l'actualitza (el camp hi entra o en surt).
+    function validarCamp(camp) {
+      const m = missatgeDe(camp);
+      if (resum.classList.contains("visible")) {
+        aplicar(camp, m);
+        renderResum();
+      } else {
+        pintar(camp, m);
+      }
     }
-    ["nom", "email", "assumpte", "telefon", "missatge"].forEach((id) => {
+
+    ["nom", "identitat", "email", "assumpte", "telefon", "missatge"].forEach((id) => {
       const camp = form.elements[id];
-      camp.addEventListener("input", () => corregir(camp));
-      camp.addEventListener("change", () => corregir(camp));
+      camp.addEventListener("blur", () => validarCamp(camp));      // en sortir del camp
+      camp.addEventListener("change", () => validarCamp(camp));    // en canviar-ne el valor (o triar a la llista)
+      camp.addEventListener("input", () => {                       // mentre s'escriu, només si ja estava validat
+        if (camp.classList.contains("invalid") || camp.classList.contains("valid")) validarCamp(camp);
+      });
     });
     radios.forEach((r) => r.addEventListener("change", () => {
-      corregir(primerRadio);
+      validarCamp(primerRadio);
       const volTelefon = form.elements.via.value === "telefon";
       blocTelefon.hidden = !volTelefon;
       telefon.disabled = !volTelefon;
@@ -141,6 +171,7 @@ const form = document.querySelector("#form-contacte");
       renderResum();
       resultat.textContent = `Gràcies, ${form.elements.nom.value.trim()}. Hem rebut el teu missatge sobre «${form.elements.assumpte.selectedOptions[0].text}».`;
       form.reset();
+      campsValidables().forEach(netejarCamp);      // treu els colors i els «✔ Correcte»
       comptador.textContent = "0 / 300";
       blocTelefon.hidden = true;
       telefon.disabled = true;

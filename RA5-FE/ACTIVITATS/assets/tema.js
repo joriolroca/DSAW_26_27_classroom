@@ -46,7 +46,8 @@
       parent.postMessage({ demoReady: 1 }, "*");
       if (window.ResizeObserver) {
         new ResizeObserver(function () {
-          parent.postMessage({ altura: root.scrollHeight }, "*");
+          // Es mesura el cos de la pàgina (no l'html, que mai és més petit que l'iframe): així l'iframe pot créixer i també encongir-se
+          parent.postMessage({ altura: Math.ceil(document.body.getBoundingClientRect().height) }, "*");
         }).observe(document.body);
       }
     }

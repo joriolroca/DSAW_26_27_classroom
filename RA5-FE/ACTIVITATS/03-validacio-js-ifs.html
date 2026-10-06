@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Activitat 3 - Validació amb JavaScript, regex i condicionals</title>
+  <link rel="stylesheet" href="assets/base.css">
+  <script src="assets/tema.js"></script>
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="index.html">← Tornar a l'índex</a>
+  <button type="button" id="tema-toggle">🌙 Mode fosc</button>
+</nav>
+
+<header>
+  <p><small>DSAW · RA5 · Formularis i validació · Activitat 3 de 5</small></p>
+  <h1>Crear un compte d'usuari</h1>
+</header>
+
+<section class="enunciat">
+  <h2>Objectiu</h2>
+  <p>Fer un formulari de registre validat amb JavaScript. En acabar, hauràs après a:</p>
+  <ul>
+    <li><strong>Combinar condicionals i expressions regulars:</strong> <code>if</code> / <code>else if</code> per comprovar si un camp és buit, quants caràcters té (<code>length</code>) o si coincideix amb un altre, i una regex (<code>test()</code>) per comprovar el format.</li>
+    <li>Validar <strong>sense l'API de validació</strong>: l'HTML no porta cap <code>required</code> ni <code>pattern</code>.</li>
+    <li>Escriure <strong>un missatge d'error</strong> per a cada cas, al costat del camp.</li>
+    <li>Pintar cada camp de <strong>verd</strong> (correcte) o de <strong>vermell</strong> (amb error).</li>
+    <li>Validar amb els esdeveniments <code>blur</code> (en sortir del camp) i <code>change</code> (en canviar-ne el valor).</li>
+    <li>Comprovar la <strong>coherència entre camps</strong> (la contrasenya i la seva repetició).</li>
+    <li>Tornar a validar <strong>tots els camps</strong> en enviar el formulari i posar el focus al primer erroni.</li>
+  </ul>
+
+  <h2>Regles de validació</h2>
+  <table>
+    <thead><tr><th>Camp</th><th>Regles</th><th>Com es comprova</th><th>Missatges d'error (un per cada cas)</th></tr></thead>
+    <tbody>
+      <tr><td>Nom d'usuari</td><td>Obligatori. Entre 3 i 15 caràcters. Només lletres (sense accents), números i <code>_</code>.</td><td>Condicionals (buit, <code>length</code>) + regex (caràcters permesos)</td><td>«El nom d'usuari és obligatori» / «Ha de tenir 3 caràcters com a mínim» / «Ha de tenir 15 caràcters com a màxim» / «Només lletres (sense accents), números i _»</td></tr>
+      <tr><td>Correu</td><td>Obligatori i amb format de correu (<code>nom@exemple.cat</code>), sense espais.</td><td>Condicional (buit) + regex (format)</td><td>«El correu és obligatori» / «El format del correu no és correcte (nom@exemple.cat)»</td></tr>
+      <tr><td>Contrasenya</td><td>Mínim 8 caràcters i almenys un número.</td><td>Condicionals (buida, <code>length</code>) + regex (conté un dígit)</td><td>«La contrasenya és obligatòria» / «Ha de tenir 8 caràcters com a mínim» / «Ha de contenir almenys un número»</td></tr>
+      <tr><td>Repetir contrasenya</td><td>Ha de coincidir amb la contrasenya (<strong>coherència entre camps</strong>).</td><td>Condicionals</td><td>«Repeteix la contrasenya» / «Les contrasenyes no coincideixen»</td></tr>
+      <tr><td>Accepto les condicions</td><td>Ha d'estar marcada.</td><td>Condicional (<code>checked</code>)</td><td>«Has d'acceptar les condicions»</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Què has de fer (a <code>script.js</code>)</h2>
+  <p>El punt de partida ja porta <strong>el camp «nom d'usuari» fet</strong> com a exemple (la seva validació, els esdeveniments <code>blur</code> i <code>change</code>, i l'enviament). Tu has de fer el mateix amb els altres quatre camps.</p>
+  <ol>
+    <li><strong>Agafa els elements.</strong> Per a cada camp (<code>#email</code>, <code>#password</code>, <code>#password2</code>, <code>#condicions</code>) i el seu element d'error (<code>#error-email</code>...), amb <code>document.querySelector</code>.</li>
+    <li><strong>Escriu una funció per camp:</strong> <code>validarEmail</code>, <code>validarPassword</code>, <code>validarPassword2</code> i <code>validarCondicions</code>, com la <code>validarUsuari</code> de l'exemple. Ha de retornar <code>true</code> si el camp és correcte i <code>false</code> si no.</li>
+    <li><strong>Prepara el missatge:</strong> dins de cada funció, declara <code>let missatge = "";</code>. Si al final continua buit, el camp és correcte.</li>
+    <li><strong>Comprova els casos amb <code>if</code> / <code>else if</code>, en ordre:</strong> primer «buit», després la llargada i al final el format. Un cas per cada missatge de la taula, perquè el camp mostri un sol missatge.</li>
+    <li><strong>Llargades i comparacions amb condicionals:</strong> <code>valor.length &lt; 8</code> per a la contrasenya, <code>password2.value !== password.value</code> per a la repetició i <code>condicions.checked</code> per a la casella.</li>
+    <li><strong>Formats amb regex:</strong> el correu (<code>text@text.text</code>, sense espais) i que la contrasenya tingui algun número (<code>/\d/</code>), amb <code>test()</code>. Recorda <code>^</code> i <code>$</code> per validar el valor sencer.</li>
+    <li><strong>Si el camp és correcte (verd):</strong> escriu «✔ Correcte» a l'element d'error i posa-li la classe <code>ok</code>; al camp, treu-li <code>invalid</code> i posa-li <code>valid</code> (amb <code>classList</code>). Retorna <code>true</code>.</li>
+    <li><strong>Si no és correcte (vermell):</strong> escriu el missatge a l'element d'error i treu-li la classe <code>ok</code>; al camp, treu-li <code>valid</code> i posa-li <code>invalid</code>. Retorna <code>false</code>.</li>
+    <li><strong>Valida en sortir i en canviar:</strong> afegeix a cada camp dos <code>addEventListener</code>, <code>blur</code> i <code>change</code>, amb la mateixa funció.</li>
+    <li><strong>Revalida la repetició:</strong> quan es valida la contrasenya i «Repetir contrasenya» ja té valor, torna a validar la repetició (per exemple amb una funció que cridi les dues).</li>
+    <li><strong>Amplia el <code>submit</code>:</strong> l'exemple ja fa <code>event.preventDefault()</code> i valida només el nom d'usuari. Crida les 5 funcions i guarda què retorna cadascuna (<code>const emailOk = validarEmail();</code>...), encara que alguna falli, perquè es pintin tots els camps.</li>
+    <li><strong>Posa el focus al primer camp que falla</strong>, seguint l'ordre del formulari (<code>camp.focus()</code>), i atura't amb <code>return</code>. No esborris el que l'usuari ha escrit.</li>
+    <li><strong>Si tot és correcte:</strong> mostra la benvinguda a <code>#resultat</code>, fes <code>form.reset()</code> i treu les classes i els missatges dels 5 camps.</li>
+  </ol>
+</section>
+
+<!-- ===== COMPORTAMENT ESPERAT (demo) ===== -->
+<section class="demo">
+  <h2>Així ha de funcionar</h2>
+  <p>Aquest és un formulari de mostra ja acabat. Prova'l i fixa't en el comportament: el teu ha de fer el mateix. Surt d'un camp amb l'error per veure'l, corregeix-lo i mira com desapareix. Envia'l amb errors i observa on va el focus.</p>
+  <iframe src="solucions/03-validacio-js-ifs/index.html" title="Demo del comportament esperat" style="height:640px"></iframe>
+</section>
+
+<!-- ===== PUNT DE PARTIDA PER COPIAR ===== -->
+<section class="punt-partida">
+  <h2>Punt de partida</h2>
+  <p>Si vols, copia aquest codi per no haver d'escriure el formulari des de zero. Desa'l en una carpeta com a <code>index.html</code>, <code>estils.css</code> i <code>script.js</code>.
+    L'HTML i el CSS ja estan acabats (l'HTML <strong>no porta atributs de validació</strong>, perquè validaràs tu amb JavaScript) i el JavaScript porta el camp «nom d'usuari» fet com a exemple i els altres camps explicats en comentaris: els has d'escriure tu.</p>
+  <div class="codi">
+    <div class="codi-barra"><span>index.html</span><button type="button" class="copia" data-copia="codi-html">Copiar</button></div>
+    <pre><code id="codi-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="ca"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Crear un compte d'usuari&lt;/title&gt;
+  &lt;link rel="stylesheet" href="estils.css"&gt;
+  &lt;!-- defer: el navegador descarrega el script mentre llegeix l'HTML, però no l'executa fins que tota la pàgina està carregada.
+       Per això es pot posar al &lt;head&gt; i, tot i així, document.querySelector ja troba el formulari. --&gt;
+  &lt;script src="script.js" defer&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Crear un compte d'usuari&lt;/h1&gt;
+
+  &lt;!-- Les etiquetes amb class="obligatori" mostren un asterisc (veure estils.css). --&gt;
+  &lt;p class="llegenda"&gt;* Camp obligatori&lt;/p&gt;
+
+  &lt;!-- novalidate: el navegador no valida res. En aquesta activitat NO fem servir cap atribut de validació
+       (required, pattern, minlength...): totes les comprovacions les escriuràs tu a script.js amb ifs. --&gt;
+  &lt;form id="form-registre" novalidate&gt;
+
+    &lt;!-- A cada camp, sota el control hi ha un &lt;span class="missatge-error"&gt; buit: és on JavaScript escriurà l'error.
+         aria-describedby enllaça el camp amb el seu error i aria-live fa que el lector de pantalla el llegeixi. --&gt;
+
+    &lt;!-- NOM D'USUARI: obligatori, entre 3 i 15 caràcters, només lletres, números i _ --&gt;
+    &lt;div class="camp"&gt;
+      &lt;label class="obligatori" for="usuari"&gt;Nom d'usuari&lt;/label&gt;
+      &lt;span class="ajuda" id="ajuda-usuari"&gt;Entre 3 i 15 caràcters: lletres, números i _&lt;/span&gt;
+      &lt;input type="text" id="usuari" name="usuari" aria-describedby="ajuda-usuari error-usuari"&gt;
+      &lt;span class="missatge-error" id="error-usuari" aria-live="polite"&gt;&lt;/span&gt;
+    &lt;/div&gt;
+
+    &lt;!-- CORREU: obligatori i amb forma de correu --&gt;
+    &lt;div class="camp"&gt;
+      &lt;label class="obligatori" for="email"&gt;Correu electrònic&lt;/label&gt;
+      &lt;input type="email" id="email" name="email" placeholder="nom@exemple.cat" aria-describedby="error-email"&gt;
+    &lt;/div&gt;
+
+    &lt;!-- CONTRASENYA: mínim 8 caràcters i almenys un número --&gt;
+    &lt;div class="camp"&gt;
+      &lt;label class="obligatori" for="password"&gt;Contrasenya&lt;/label&gt;
+      &lt;span class="ajuda" id="ajuda-password"&gt;Mínim 8 caràcters i almenys un número&lt;/span&gt;
+      &lt;input type="password" id="password" name="password" aria-describedby="ajuda-password error-password"&gt;
+    &lt;/div&gt;
+
+    &lt;!-- REPETIR CONTRASENYA: ha de coincidir amb l'anterior --&gt;
+    &lt;div class="camp"&gt;
+      &lt;label class="obligatori" for="password2"&gt;Repetir contrasenya&lt;/label&gt;
+      &lt;input type="password" id="password2" name="password2" aria-describedby="error-password2"&gt;
+    &lt;/div&gt;
+
+    &lt;!-- CONDICIONS: la casella ha d'estar marcada --&gt;
+    &lt;div class="camp"&gt;
+      &lt;label class="opcio obligatori"&gt;&lt;input type="checkbox" id="condicions" name="condicions" aria-describedby="error-condicions"&gt; Accepto les condicions d'ús&lt;/label&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Un botó dins d'un formulari ja és de tipus «submit» per defecte. --&gt;
+    &lt;button&gt;Crear compte&lt;/button&gt;
+
+    &lt;!-- Missatge de confirmació quan tot és correcte. --&gt;
+    &lt;p id="resultat" aria-live="polite"&gt;&lt;/p&gt;
+  &lt;/form&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+  </div>
+  <div class="codi">
+    <div class="codi-barra"><span>estils.css</span><button type="button" class="copia" data-copia="codi-css">Copiar</button></div>
+    <pre><code id="codi-css">/* ===== PÀGINA ===== */
+
+/* Tipografia, columna centrada de 480px de màxim i una mica d'aire als costats (també en mòbil). */
+body {
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+  max-width: 480px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+
+/* ===== FORMULARI ===== */
+
+/* Cada camp (etiqueta + control + error) és un bloc separat de l'anterior. */
+.camp {
+  margin-top: 1rem;
+}
+
+/* L'etiqueta ocupa la seva línia, en negreta, i queda just a sobre del camp. */
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+/* Camps obligatoris: les etiquetes amb la classe "obligatori" mostren un asterisc vermell al final. */
+.obligatori::after {
+  content: " *";
+  color: #c92a2a;
+}
+
+/* Llegenda de l'asterisc, a sobre del formulari. */
+.llegenda {
+  font-size: 0.85rem;
+  color: #495057;
+}
+
+/* Tots els camps ocupen tota l'amplada, amb farciment i vora arrodonida.
+   box-sizing: border-box fa que el farciment i la vora no facin el camp més ample que el 100%.
+   :not([type="checkbox"]) exclou la casella de selecció, que ha de mantenir la seva mida natural. */
+input:not([type="checkbox"]),
+select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #868e96;
+  border-radius: 4px;
+}
+
+/* L'etiqueta de la casella: text normal (no negreta) i en línia amb la casella. */
+label.opcio {
+  display: inline;
+  font-weight: normal;
+}
+
+/* Text d'ajuda sota l'etiqueta: més petit i gris, perquè no es confongui amb un error. */
+.ajuda {
+  display: block;
+  font-size: 0.85rem;
+  color: #495057;
+}
+
+/* Quan un camp té el focus, es mostra una vora blava perquè l'usuari vegi on està escrivint.
+   Mai s'ha de treure el focus sense posar-ne un altre: el teclat deixaria de ser usable. */
+input:focus,
+select:focus {
+  outline: 3px solid #74c0fc;
+  outline-offset: 1px;
+}
+
+/* Espai on JavaScript escriu l'error de cada camp. Té una alçada mínima reservada (min-height)
+   perquè el formulari no "salti" cap avall quan apareix el missatge. */
+.missatge-error {
+  display: block;
+  min-height: 1.2em;
+  font-size: 0.85rem;
+  color: #c92a2a;
+}
+
+/* Quan el camp és correcte, el mateix espai mostra "✔ Correcte" en verd (classe .ok afegida per JavaScript). */
+.missatge-error.ok {
+  color: #2b8a3e;
+}
+
+/* ESTATS DE VALIDACIÓ
+   Aquí no fem servir :user-invalid / :user-valid: és JavaScript qui decideix quan un camp és correcte o
+   no, i li afegeix les classes .invalid o .valid.
+   - .invalid -&gt; vora gruixuda (2px) vermella. El color sol no és suficient (daltonisme), per això també
+     hi ha el missatge de text i el canvi de gruix.
+   - .valid   -&gt; vora gruixuda verda.
+   El !important és necessari perquè la regla input:not([type="checkbox"]) de dalt és més específica
+   que una simple classe i, sense ell, guanyaria la vora grisa. */
+.invalid {
+  border: 2px solid #c92a2a !important;
+}
+
+.valid {
+  border: 2px solid #2b8a3e !important;
+}
+
+/* El camp invàlid, quan té el focus, manté un contorn visible (més clar, per diferenciar-lo de la vora). */
+.invalid:focus {
+  outline: 3px solid #ffa8a8;
+}
+
+/* Botó d'enviar: més gran i amb el cursor de mà. */
+button {
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.4rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Missatge de confirmació quan el formulari s'ha enviat bé. */
+#resultat {
+  margin-top: 1rem;
+  font-weight: 600;
+  color: #2b8a3e;
+}
+</code></pre>
+  </div>
+  <div class="codi">
+    <div class="codi-barra"><span>script.js</span><button type="button" class="copia" data-copia="codi-js">Copiar</button></div>
+    <pre><code id="codi-js">const form = document.querySelector("#form-registre");
+const resultat = document.querySelector("#resultat");
+
+
+// ===== EXEMPLE: EL CAMP «NOM D'USUARI» =====
+// Agafem el camp i l'element on escriurem el seu error
+const usuari = document.querySelector("#usuari");
+const errorUsuari = document.querySelector("#error-usuari");
+
+// Comprova el nom d'usuari i el pinta de verd o de vermell. Retorna true si és correcte.
+function validarUsuari() {
+  const valor = usuari.value;
+  let missatge = "";                 // si al final continua buit, el camp és correcte
+
+  // Condicionals (if / else if) per al buit i la llargada, i una expressió regular per als caràcters permesos.
+  // Només s'arriba a un cas si els anteriors no s'han complert.
+  if (valor.trim() === "") {
+    missatge = "El nom d'usuari és obligatori";
+  } else if (valor.length &lt; 3) {
+    missatge = "Ha de tenir 3 caràcters com a mínim";
+  } else if (valor.length &gt; 15) {
+    missatge = "Ha de tenir 15 caràcters com a màxim";
+  } else if (!/^\w+$/.test(valor)) {              // regex: només lletres (sense accents), números i _ de principi a final
+    missatge = "Només lletres (sense accents), números i _";
+  }
+  // Implementar com mostrar la informació
+
+}
+
+// El camp es valida amb dos esdeveniments: blur (quan l'usuari en surt) i change (quan en canvia el valor)
+usuari.addEventListener("blur", validarUsuari);
+usuari.addEventListener("change", validarUsuari);
+
+
+// ===== ELS ALTRES CAMPS =====
+// TODO: fes el mateix que amb el nom d'usuari per a cada un dels altres camps: agafa el camp i el seu error,
+//       escriu la funció (un if / else if per cada missatge) i afegeix-hi els esdeveniments "blur" i "change".
+//   - email (#email):
+//       buit                                        -&gt; «El correu és obligatori»
+//       no compleix la regex del correu             -&gt; «El format del correu no és correcte (nom@exemple.cat)»
+//     Pista: la regex té 3 trossos, text @ text . text, on «text» és [^\s@]+ (un o més caràcters que no siguin espai ni @).
+//            Recorda el \. per escriure un punt de veritat, i ^ ... $ per validar el valor sencer.
+//   - password (#password):
+//       buida                                       -&gt; «La contrasenya és obligatòria»
+//       menys de 8 caràcters (length)               -&gt; «Ha de tenir 8 caràcters com a mínim»
+//       no té cap dígit (regex)                     -&gt; «Ha de contenir almenys un número»
+//     Pista: /\d/.test(valor) diu si hi ha algun dígit.
+//   - password2 (#password2):
+//       buida                                       -&gt; «Repeteix la contrasenya»
+//       diferent de password.value                  -&gt; «Les contrasenyes no coincideixen»
+//     A més, quan es valida password i password2 ja té valor, torna a validar password2.
+//   - condicions (#condicions):
+//       !condicions.checked                         -&gt; «Has d'acceptar les condicions»
+
+
+// ===== AMPLIAR L'ENVIAMENT AMB ELS ALTRES CAMPS =====
+// TODO: crea el "submit" perquè validi els 5 camps:
+//   1. Després de const usuariOk = validarUsuari(); crida també les altres funcions i guarda què retornen.
+//      S'han de cridar totes, també si alguna falla, perquè es pintin tots els camps.
+//   2. Posa el focus al primer camp que falla, seguint l'ordre del formulari.
+//   3. Al final, quan tot és correcte, treu també les classes i els missatges d'error dels altres 4 camps.
+</code></pre>
+  </div>
+</section>
+
+<!-- ===== REPÀS DE TEORIA ===== -->
+<section class="enunciat" style="margin-top:1.5rem">
+  <h2>Repàs de teoria</h2>
+
+  <h3>Condicionals i expressions regulars: cadascun fa la seva feina</h3>
+  <p>
+    Per validar un camp, es combinen dues eines:
+  </p>
+  <ul>
+    <li><strong>Condicionals (<code>if</code> / <code>else if</code>)</strong> per a les comprovacions «numèriques» o de comparació: és buit?, quants caràcters té (<code>length</code>)?, és igual a un altre camp?, està marcada la casella?</li>
+    <li><strong>Expressions regulars (<code>test()</code>)</strong> per al <em>format</em>: només lletres i números?, té forma de correu?, conté algun dígit?</li>
+  </ul>
+  <p>
+    Es posen en ordre (primer «buit», després la llargada i al final el format) amb una cadena d'<code>else if</code>: només es mira un cas si els anteriors no s'han complert, i així cada camp mostra un sol missatge, el que toca.
+  </p>
+
+  <h3><code>length</code>, <code>trim()</code> i <code>value</code></h3>
+  <table>
+    <thead><tr><th>Què</th><th>Per a què serveix</th><th>Exemple</th></tr></thead>
+    <tbody>
+      <tr><td><code>valor.length</code></td><td>Nombre de caràcters.</td><td><code>"hola".length</code> → <code>4</code></td></tr>
+      <tr><td><code>valor.trim()</code></td><td>Treu els espais de l'inici i el final (per detectar un camp «buit» que només té espais).</td><td><code>"  a ".trim()</code> → <code>"a"</code></td></tr>
+      <tr><td><code>camp.checked</code></td><td><code>true</code> o <code>false</code> segons si la casella està marcada.</td><td><code>condicions.checked</code></td></tr>
+    </tbody>
+  </table>
+  <p>Recorda que <code>value</code> retorna <strong>sempre un text</strong> (<code>string</code>), també en un camp numèric.</p>
+
+  <h3>Una mica de regex: <code>test()</code></h3>
+  <p>
+    Una <strong>expressió regular</strong> és un patró entre barres, <code>/patró/</code>, i <code>test()</code> diu si un text el compleix: retorna <code>true</code> o <code>false</code>. Per validar un valor sencer, el patró va entre <code>^</code> (inici) i <code>$</code> (final).
+    Aquí en fas servir unes quantes:
+  </p>
+  <table>
+    <thead><tr><th>Símbol</th><th>Significat</th><th>Exemple</th></tr></thead>
+    <tbody>
+      <tr><td><code>^</code> &nbsp; <code>$</code></td><td>Inici i final del text</td><td><code>/^\d{3}$/.test("123")</code> → <code>true</code></td></tr>
+      <tr><td><code>\d</code></td><td>Un dígit (0–9)</td><td><code>/\d/.test("abc1")</code> → <code>true</code></td></tr>
+      <tr><td><code>\w</code></td><td>Una lletra sense accent, un dígit o <code>_</code></td><td><code>/^\w+$/.test("ab_1")</code> → <code>true</code></td></tr>
+      <tr><td><code>[^@]</code></td><td>Un caràcter que <strong>no</strong> sigui un dels indicats</td><td><code>[^@]</code> accepta <code>a</code>, no <code>@</code></td></tr>
+      <tr><td><code>\s</code></td><td>Un espai en blanc</td><td><code>[^\s]</code> accepta qualsevol cosa menys espais</td></tr>
+      <tr><td><code>+</code> &nbsp; <code>{n}</code></td><td>Un o més · exactament <em>n</em> vegades</td><td><code>\d+</code> accepta <code>7</code>, <code>2026</code></td></tr>
+      <tr><td><code>\.</code> &nbsp; <code>@</code></td><td>Un punt de veritat (el punt sol vol dir «qualsevol caràcter») · una @</td><td><code>/a\.b/.test("a.b")</code> → <code>true</code></td></tr>
+    </tbody>
+  </table>
+  <p><strong>Compte:</strong> sense <code>^</code> i <code>$</code>, <code>test()</code> accepta el text si el patró apareix <em>en qualsevol lloc</em>: <code>/\w+/.test("ab c!")</code> és <code>true</code>, però <code>/^\w+$/.test("ab c!")</code> és <code>false</code>.</p>
+
+  <h3>Quan es valida: <code>blur</code>, <code>change</code> i <code>submit</code></h3>
+  <table>
+    <thead><tr><th>Esdeveniment</th><th>Quan es produeix</th><th>Ús en aquesta activitat</th></tr></thead>
+    <tbody>
+      <tr><td><code>blur</code></td><td>Quan l'usuari surt del camp (en perd el focus), encara que no hagi escrit res.</td><td>Valida el camp quan l'usuari en surt, també si no ha escrit res (per mostrar «obligatori»).</td></tr>
+      <tr><td><code>change</code></td><td>Quan el valor ha canviat i es confirma: en un camp de text, en sortir-ne; en una casella, en marcar-la o desmarcar-la.</td><td>Valida el camp quan en canvia el valor, i és l'esdeveniment que respon a la casella.</td></tr>
+      <tr><td><code>submit</code></td><td>En enviar el formulari, amb el botó o amb Enter.</td><td>Valida tots els camps i porta el focus al primer erroni. <strong>Sempre s'ha de fer</strong>, perquè l'usuari pot prémer «Crear compte» sense haver passat per tots els camps.</td></tr>
+    </tbody>
+  </table>
+  <p>Fer servir <code>blur</code> i <code>change</code> alhora és segur: <code>blur</code> es dispara <em>sempre</em> que l'usuari surt del camp i <code>change</code> només quan el valor ha canviat. Quan passen tots dos, el camp es valida dues vegades i el resultat és el mateix.</p>
+
+</section>
+
+<script src="assets/copia.js"></script>
+
+<p class="peu"><a class="btn-index" href="index.html">← Tornar a l'índex</a></p>
+
+</body>
+</html>

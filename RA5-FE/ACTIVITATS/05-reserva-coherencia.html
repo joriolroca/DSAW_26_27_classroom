@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Activitat 5 - Reserva amb validació completa</title>
+  <link rel="stylesheet" href="assets/base.css">
+  <script src="assets/tema.js"></script>
+
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="index.html">← Tornar a l'índex</a>
+  <button type="button" id="tema-toggle">🌙 Mode fosc</button>
+</nav>
+
+<header>
+  <p><small>DSAW · RA5 · Formularis i validació · Activitat 5 de 5</small></p>
+  <h1>Reserva d'una habitació d'hotel</h1>
+</header>
+
+<section class="enunciat">
+  <h2>Objectiu</h2>
+  <p>Activitat final: un formulari de reserva d'hotel validat <strong>amb expressions regulars</strong>. En acabar, hauràs après a:</p>
+  <ul>
+    <li><strong>Validar amb regex</strong> (<code>test()</code>) tots els camps amb format: el nom, el correu, el telèfon, el tipus d'habitació, els adults, els nens, el codi de descompte i el format de les dates.</li>
+    <li>Validar <strong>sense atributs de validació a l'HTML</strong> (cap <code>required</code>, <code>pattern</code>, <code>min</code> o <code>max</code>) i sense l'API de validació: tota la validació és al JavaScript.</li>
+    <li>Fer les <strong>comprovacions entre camps</strong> que una regex no pot fer: les dates entre elles i el nombre de persones amb la capacitat de l'habitació.</li>
+    <li>Mostrar la <strong>llista d'errors a sobre del formulari</strong>, amb enllaços als camps, i marcar cada camp de verd o de vermell.</li>
+  </ul>
+
+  <h2>Regles de validació</h2>
+  <table>
+    <thead><tr><th>Camp</th><th>Regles</th><th>Com es comprova</th></tr></thead>
+    <tbody>
+      <tr><td>Nom del titular</td><td>Obligatori. Entre 3 i 40 caràcters, només lletres (amb accents) i espais.</td><td>Regex</td></tr>
+      <tr><td>Correu</td><td>Obligatori i amb format de correu, sense espais.</td><td>Regex</td></tr>
+      <tr><td>Telèfon</td><td>Obligatori. 9 dígits que comencin per 6, 7, 8 o 9.</td><td>Regex</td></tr>
+      <tr><td>Data d'entrada</td><td>Obligatòria. Format <code>aaaa-mm-dd</code> i no pot ser anterior a avui.</td><td>Regex (format) + comparació</td></tr>
+      <tr><td>Data de sortida</td><td>Obligatòria. Format <code>aaaa-mm-dd</code>, posterior a l'entrada, i l'estada no pot passar de 14 nits.</td><td>Regex (format) + comparació</td></tr>
+      <tr><td>Tipus d'habitació</td><td>Cal triar-ne una: individual, doble o familiar.</td><td>Regex</td></tr>
+      <tr><td>Adults</td><td>Un número del 1 al 4.</td><td>Regex</td></tr>
+      <tr><td>Nens</td><td>Un número del 0 al 3. <strong>Coherència:</strong> adults + nens no poden passar de la capacitat de l'habitació (individual: 1, doble: 2, familiar: 4).</td><td>Regex + comparació</td></tr>
+      <tr><td>Codi de descompte</td><td>Opcional. Si s'omple, <code>HOTEL-</code> seguit de 4 números (ex. <code>HOTEL-2026</code>).</td><td>Regex</td></tr>
+    </tbody>
+  </table>
+
+
+</section>
+
+<!-- ===== COMPORTAMENT ESPERAT (demo) ===== -->
+<section class="demo">
+  <h2>Així ha de funcionar</h2>
+  <p>Aquest és un formulari de mostra ja acabat. Prova'l i fixa't en el comportament: el teu ha de fer el mateix. Prova dates incoherents, més de 14 nits, més persones de les que caben a l'habitació i un codi de descompte amb el format HOTEL-2026. Envia'l amb errors i mira la llista a sobre del formulari.</p>
+  <iframe src="solucions/05-reserva-coherencia/index.html" title="Demo del comportament esperat" style="height:640px"></iframe>
+</section>
+
+<p class="peu"><a class="btn-index" href="index.html">← Tornar a l'índex</a></p>
+
+</body>
+</html>

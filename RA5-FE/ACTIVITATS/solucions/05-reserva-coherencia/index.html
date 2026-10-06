@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo 5 - Reserva amb expressions regulars</title>
+  <link rel="stylesheet" href="../../assets/pagina.css">
+  <link rel="stylesheet" href="estils.css">
+  <!-- defer: s'executa quan tota la pàgina està carregada, per això pot anar al <head> -->
+  <script src="script.js" defer></script>
+  <!-- Només serveix perquè el botó de mode fosc de la pàgina de l'enunciat canviï també aquesta demo -->
+  <script src="../../assets/tema.js"></script>
+</head>
+<body>
+  <!-- Cap atribut de validació (required, pattern, min, max...): tota la validació és al script.js -->
+  <form id="form-reserva" novalidate>
+
+    <!-- La llista d'errors, a sobre del formulari. S'omple des de JavaScript -->
+    <div id="resum-errors" class="resum" tabindex="-1" role="alert"></div>
+
+    <div class="camp">
+      <label for="nom">Nom del titular</label>
+      <input type="text" id="nom" name="nom" placeholder="Anna Puig" aria-describedby="error-nom">
+      <span class="missatge-error" id="error-nom"></span>
+    </div>
+    <div class="fila">
+      <div class="camp">
+        <label for="email">Correu electrònic</label>
+        <input type="text" id="email" name="email" placeholder="nom@exemple.cat" aria-describedby="error-email">
+        <span class="missatge-error" id="error-email"></span>
+      </div>
+      <div class="camp">
+        <label for="telefon">Telèfon</label>
+        <input type="text" id="telefon" name="telefon" inputmode="tel" placeholder="612345678" aria-describedby="error-telefon">
+        <span class="missatge-error" id="error-telefon"></span>
+      </div>
+    </div>
+    <div class="fila">
+      <div class="camp">
+        <label for="entrada">Data d'entrada</label>
+        <input type="date" id="entrada" name="entrada" aria-describedby="error-entrada">
+        <span class="missatge-error" id="error-entrada"></span>
+      </div>
+      <div class="camp">
+        <label for="sortida">Data de sortida</label>
+        <input type="date" id="sortida" name="sortida" aria-describedby="error-sortida">
+        <span class="missatge-error" id="error-sortida"></span>
+      </div>
+    </div>
+    <div class="camp">
+      <label for="habitacio">Tipus d'habitació</label>
+      <select id="habitacio" name="habitacio" aria-describedby="error-habitacio">
+        <option value="">Tria una habitació...</option>
+        <option value="individual" data-capacitat="1" data-preu="60">Individual (1 persona) - 60 €/nit</option>
+        <option value="doble" data-capacitat="2" data-preu="90">Doble (2 persones) - 90 €/nit</option>
+        <option value="familiar" data-capacitat="4" data-preu="130">Familiar (4 persones) - 130 €/nit</option>
+      </select>
+      <span class="missatge-error" id="error-habitacio"></span>
+    </div>
+    <div class="fila">
+      <div class="camp">
+        <label for="adults">Adults (1 a 4)</label>
+        <input type="text" id="adults" name="adults" value="1" inputmode="numeric" aria-describedby="error-adults">
+        <span class="missatge-error" id="error-adults"></span>
+      </div>
+      <div class="camp">
+        <label for="nens">Nens (0 a 3)</label>
+        <input type="text" id="nens" name="nens" value="0" inputmode="numeric" aria-describedby="error-nens">
+        <span class="missatge-error" id="error-nens"></span>
+      </div>
+    </div>
+    <div class="camp">
+      <label for="codi">Codi de descompte (opcional)</label>
+      <input type="text" id="codi" name="codi" placeholder="HOTEL-0000" aria-describedby="error-codi">
+      <span class="missatge-error" id="error-codi"></span>
+    </div>
+
+    <button type="submit">Reservar</button>
+    <p id="resultat" aria-live="polite"></p>
+  </form>
+</body>
+</html>
