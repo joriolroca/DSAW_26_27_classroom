@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Què sortirà per la consola?</title>
+  <!-- highlight.js: colors del codi JavaScript. Tema clar o fosc segons el
+       sistema. Si no hi ha connexió, el codi es veu igualment, sense colors. -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" href="css/estils.css">
+  <!-- defer: els scripts s'executen en aquest ordre quan el DOM ja està construït.
+       fragments.js: el codi dels exercicis.
+       dades.js:     títols, solucions i explicacions (fa servir les funcions de fragments.js).
+       pagina.js:    construeix la pàgina a partir de dades.js.
+       highlight.min.js (el primer) dona color al codi. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+  <script src="js/fragments.js" defer></script>
+  <script src="js/dades.js" defer></script>
+  <script src="js/pagina.js" defer></script>
+</head>
+<body>
+
+  <!-- Enllaç a la pàgina d'inici amb totes les activitats del RA7 -->
+  <nav class="topbar">
+    <a href="../index.html">← Tornar a l'índex</a>
+  </nav>
+
+  <header>
+    <p class="subtitol">DSAW · RA7 · Comunicació asíncrona · Activitat 1</p>
+    <h1>Què sortirà per la consola?</h1>
+  </header>
+
+  <h2>Com funciona</h2>
+  <p>Hi ha 15 fragments de codi curts. Per a cada un:</p>
+  <ol>
+    <li>Llegeix el codi i escriu a <strong>Predicció</strong> què sortirà a la consola i en quin ordre, una línia per missatge. Fes-ho abans d'executar-lo.</li>
+    <li>Obre la consola (F12) i clica <strong>Executa</strong>. Compara el resultat amb la teva predicció.</li>
+    <li>Quan hagis escrit la predicció, el botó <strong>Mostra la solució</strong> s'activa. Llegeix l'explicació, sobretot si t'has equivocat. No canviïs la predicció després de veure la solució.</li>
+  </ol>
+
+  <p class="avis">Executa els fragments d'un en un i espera que acabi cada un abans de llançar el següent. Si no, els missatges es barregen a la consola. Quan la consola mostra una promesa, fixa't en la línia resumida (<code>Promise {&lt;fulfilled&gt;: true}</code>): és l'estat en el moment del <code>console.log</code>.</p>
+
+  <p class="avis">Les prediccions es desen en aquest navegador mentre escrius: si tanques la pàgina i la tornes a obrir, hi continuen.</p>
+
+  <div class="barra">
+    <span id="progres" class="progres" aria-live="polite"></span>
+  </div>
+
+  <!-- CONTINGUT: el JavaScript hi crea els blocs i els fragments. -->
+  <main id="contingut"></main>
+
+  <div class="barra">
+    <button type="button" id="esborrar" class="secundari">Esborra totes les respostes</button>
+  </div>
+
+</body>
+</html>

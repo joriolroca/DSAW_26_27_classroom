@@ -1,0 +1,180 @@
+/* ==========================================================================
+   ENDEVINA EL FETCH - estils
+   ========================================================================== */
+
+:root {
+  --text: #212529;
+  --suau: #6c757d;
+  --vora: #dee2e6;
+  --fons: #ffffff;
+  --fons-codi: #f1f3f5;
+  --principal: #1971c2;
+  --ok: #2f9e44;
+  --fons-solucio: #ebfbee;
+}
+
+/* Mode fosc si el sistema el té activat */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #e9ecef;
+    --suau: #adb5bd;
+    --vora: #495057;
+    --fons: #1e1f22;
+    --fons-codi: #2b2d31;
+    --principal: #74c0fc;
+    --ok: #8ce99a;
+    --fons-solucio: #1f3324;
+  }
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--fons);
+  max-width: 820px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+h1 { margin-bottom: 0.25rem; }
+h2 { margin-top: 2.5rem; border-bottom: 2px solid var(--vora); padding-bottom: 0.25rem; }
+.subtitol { color: var(--suau); margin-top: 0; }
+
+code, pre, textarea { font-family: ui-monospace, Consolas, monospace; }
+code { background: var(--fons-codi); padding: 0.05rem 0.3rem; border-radius: 3px; }
+
+pre {
+  background: var(--fons-codi);
+  border: 1px solid var(--vora);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  overflow-x: auto;
+  font-size: 0.9rem;
+}
+
+pre code { background: none; padding: 0; }
+
+/* highlight.js posa el seu propi fons: es manté el de la pàgina */
+pre code.hljs { background: transparent; padding: 0; }
+
+/* ===== AVISOS ===== */
+.avis {
+  border-left: 4px solid var(--principal);
+  padding: 0.5rem 1rem;
+  background: var(--fons-codi);
+}
+
+/* ===== PROGRÉS I BOTONS GENERALS ===== */
+.barra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.progres { color: var(--suau); }
+
+button {
+  font: inherit;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--principal);
+  border-radius: 6px;
+  background: var(--principal);
+  color: var(--fons);
+  cursor: pointer;
+}
+
+button.secundari { background: transparent; color: var(--principal); }
+
+button:disabled {
+  border-color: var(--vora);
+  background: var(--vora);
+  color: var(--suau);
+  cursor: not-allowed;
+}
+
+/* ===== TARGETA D'UN FRAGMENT O UNA PREGUNTA ===== */
+.fragment {
+  border: 1px solid var(--vora);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.fragment h3 { margin: 0 0 0.5rem; }
+.nota { color: var(--suau); font-size: 0.95rem; }
+
+/* Etiqueta sobre cada bloc de codi de la targeta: "Contingut del fitxer...",
+   "Extracte de la resposta...", "Codi" */
+.etiqueta {
+  margin: 0.75rem 0 0.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--suau);
+}
+
+/* La targeta contestada té la vora verda */
+.fragment.contestat { border-color: var(--ok); }
+
+label {
+  display: block;
+  font-weight: 600;
+  margin: 0.75rem 0 0.25rem;
+}
+
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 4.5rem;
+  padding: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--text);
+  background: var(--fons);
+  border: 1px solid var(--vora);
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.accions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.ajuda { color: var(--suau); font-size: 0.9rem; margin: 0.25rem 0 0; }
+
+/* ===== SOLUCIÓ ===== */
+.solucio {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--ok);
+  background: var(--fons-solucio);
+  border-radius: 0 6px 6px 0;
+}
+
+.solucio h4 { margin: 0 0 0.25rem; }
+.solucio pre { margin: 0.25rem 0 0.75rem; background: var(--fons); }
+.solucio p { margin: 0.4rem 0; }
+
+/* ===== ENLLAÇ A L'ÍNDEX ===== */
+/* Botó de la part de dalt que torna a la pàgina amb totes les activitats. */
+.topbar {
+  margin-bottom: 1rem;
+}
+
+.topbar a {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--vora);
+  border-radius: 6px;
+  color: var(--principal);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.topbar a:hover {
+  border-color: var(--principal);
+}

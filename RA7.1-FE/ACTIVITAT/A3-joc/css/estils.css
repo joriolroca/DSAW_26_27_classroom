@@ -1,0 +1,102 @@
+/* ==========================================================================
+   ENDEVINA LA PARAULA: TEMPS I IDIOMES - estils de l'enunciat
+   ========================================================================== */
+
+:root {
+  --text: #212529;
+  --suau: #6c757d;
+  --vora: #dee2e6;
+  --fons: #ffffff;
+  --fons-codi: #f1f3f5;
+  --principal: #1971c2;
+}
+
+/* Mode fosc si el sistema el té activat */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #e9ecef;
+    --suau: #adb5bd;
+    --vora: #495057;
+    --fons: #1e1f22;
+    --fons-codi: #2b2d31;
+    --principal: #74c0fc;
+  }
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  line-height: 1.55;
+  color: var(--text);
+  background: var(--fons);
+  max-width: 860px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+h1 { margin-bottom: 0.25rem; }
+h2 { margin-top: 2.5rem; border-bottom: 2px solid var(--vora); padding-bottom: 0.25rem; }
+h3 { margin-top: 1.5rem; }
+.subtitol { color: var(--suau); margin-top: 0; }
+
+a { color: var(--principal); }
+
+code, pre { font-family: ui-monospace, Consolas, monospace; }
+code { background: var(--fons-codi); padding: 0.05rem 0.3rem; border-radius: 3px; }
+
+pre {
+  background: var(--fons-codi);
+  border: 1px solid var(--vora);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  overflow-x: auto;
+  font-size: 0.9rem;
+}
+
+pre code { background: none; padding: 0; }
+
+/* highlight.js posa el seu propi fons: es manté el de la pàgina */
+pre code.hljs { background: transparent; padding: 0; }
+
+/* ===== AVISOS ===== */
+.avis {
+  border-left: 4px solid var(--principal);
+  padding: 0.5rem 1rem;
+  background: var(--fons-codi);
+}
+
+/* ===== TAULES ===== */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+  font-size: 0.95rem;
+}
+
+th, td {
+  border: 1px solid var(--vora);
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+th { background: var(--fons-codi); }
+
+/* ===== ENLLAÇ A L'ÍNDEX ===== */
+/* Botó de la part de dalt que torna a la pàgina amb totes les activitats. */
+.topbar {
+  margin-bottom: 1rem;
+}
+
+.topbar a {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--vora);
+  border-radius: 6px;
+  color: var(--principal);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.topbar a:hover {
+  border-color: var(--principal);
+}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Endevina la paraula: temps i idiomes</title>
+  <!-- highlight.js: colors del codi. Si no hi ha connexió, el codi es veu igualment, sense colors. -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" href="css/estils.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+  <script src="js/enunciat.js" defer></script>
+</head>
+<body>
+
+  <!-- Enllaç a la pàgina d'inici amb totes les activitats del RA7 -->
+  <nav class="topbar">
+    <a href="../index.html">← Tornar a l'índex</a>
+  </nav>
+
+  <header>
+    <p class="subtitol">DSAW · RA7 · Comunicació asíncrona · Activitat 3</p>
+    <h1>Endevina la paraula: temps i idiomes</h1>
+  </header>
+
+  <p>Partiràs del joc <strong>Endevina la paraula</strong> que vas programar al RA3 i hi afegiràs dues funcionalitats asíncrones: un compte enrere de 2 minuts per a cada partida, i un teclat que es crea a partir d'un fitxer JSON amb l'alfabet de l'idioma del navegador.</p>
+
+  <h2>Objectius</h2>
+  <ul>
+    <li>Programar una tasca que es repeteix cada segon amb <code>setInterval</code>, i aturar-la amb <code>clearInterval</code> quan ja no cal.</li>
+    <li>Llegir un fitxer JSON amb <code>fetch</code>, <code>async</code> i <code>await</code>, i comprovar si la resposta ha anat bé.</li>
+    <li>Triar el fitxer segons l'idioma del navegador.</li>
+    <li>Actualitzar la pàgina amb les dades rebudes: crear el teclat a partir de l'alfabet llegit.</li>
+    <li>Gestionar els errors amb <code>try...catch</code> i informar l'usuari.</li>
+    <li>Treballar en una branca de Git.</li>
+  </ul>
+
+  <!-- ===== PART 0 ===== -->
+  <h2>Part 0. Una branca nova: <code>asyncron</code></h2>
+  <p>Crea una branca nova anomenada <code>asyncron</code> al repositori del joc.</p>
+
+  <!-- ===== PART 1 ===== -->
+  <h2>Part 1. Compte enrere de 2 minuts</h2>
+  <p>Cada partida dura com a màxim 2 minuts. A la pantalla del joc hi ha d'haver un rellotge que mostri el temps que queda, en format <code>mm:ss</code>, i que baixi cada segon.</p>
+  <ol>
+    <li>Afegeix a la pantalla del joc un element on es mostri el temps. Abans de començar la primera partida ha de dir <code>02:00</code>.</li>
+    <li>En començar una partida, el temps torna a <code>02:00</code> i comença a baixar. Fes-ho amb <code>setInterval</code>, cada 1000 ms.</li>
+    <li>Quan el temps arriba a <code>00:00</code>, la partida es dona per perduda, exactament igual que quan s'acaben les errades:
+      <ul>
+        <li>es mostra la paraula secreta,</li>
+        <li>el panell de la paraula surt amb el fons de color vermell,</li>
+        <li>es fan els càlculs del total de partides (i del percentatge de guanyades),</li>
+        <li>el teclat es desactiva i es pot començar una partida nova.</li>
+      </ul>
+    </li>
+    <li>El compte enrere s'ha d'aturar amb <code>clearInterval</code> sempre que la partida acabi: tant si s'acaba el temps com si es guanya o es perd per errades. Si no s'atura, el temps continua baixant i la partida es perd dues vegades.</li>
+  </ol>
+  <p>Per mostrar els minuts i els segons amb dues xifres, pots partir de l'exemple de l'apartat 3.2 de la teoria:</p>
+  <pre><code class="language-js">const minuts = Math.floor(tempsRestant / 60);
+const segons = tempsRestant % 60;
+// padStart afegeix un 0 al davant si cal: 5 -> "05"
+rellotge.textContent = `${String(minuts).padStart(2, "0")}:${String(segons).padStart(2, "0")}`;</code></pre>
+  <p class="avis">Guarda sempre l'identificador que retorna <code>setInterval</code>: el necessites per aturar-lo. Aprofita la funció que ja tens per acabar la partida en lloc de repetir-ne el codi.</p>
+
+  <!-- ===== PART 2 ===== -->
+  <h2>Part 2. L'alfabet segons l'idioma del navegador</h2>
+  <p>Ara les lletres del teclat estan escrites dins del JavaScript. A partir d'ara s'han de llegir d'un fitxer JSON, i el fitxer depèn de l'idioma del navegador: en català hi ha la <code>Ç</code>, en castellà la <code>Ñ</code>, i en anglès no hi ha cap lletra afegida.</p>
+  <ol>
+    <li>Descarrega els tres fitxers i desa'ls en una carpeta <code>res/</code> a l'arrel del teu projecte. No en canviïs el nom:
+      <table>
+        <thead><tr><th>Fitxer</th><th>Idioma</th><th>Lletres</th></tr></thead>
+        <tbody>
+          <tr><td><a href="res/alfabet_ca.json" download><code>alfabet_ca.json</code></a></td><td>Català</td><td>27, amb la <code>Ç</code> darrere de la <code>C</code></td></tr>
+          <tr><td><a href="res/alfabet_es.json" download><code>alfabet_es.json</code></a></td><td>Castellà</td><td>27, amb la <code>Ñ</code> darrere de la <code>N</code></td></tr>
+          <tr><td><a href="res/alfabet_en.json" download><code>alfabet_en.json</code></a></td><td>Anglès</td><td>26</td></tr>
+        </tbody>
+      </table>
+      Tots tres tenen la mateixa estructura:
+      <pre><code class="language-json">{
+  "alfabet": ["A", "B", "C", "Ç", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+              "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+}</code></pre>
+    </li>
+    <li>Fes una funció <code>async</code> que rebi el codi de l'idioma i retorni l'array de lletres del fitxer corresponent. L'idioma és el que ja calcules a la pantalla inicial a partir de <code>navigator.language</code> (els dos primers caràcters: <code>"ca"</code>, <code>"es"</code>, <code>"en"</code>...).</li>
+    <li>Si l'idioma del navegador no és cap dels tres, carrega l'alfabet anglès.</li>
+    <li>Fes la petició amb <code>fetch</code> i <code>await</code>. Comprova <code>ok</code>: si la resposta no és correcta, llança un error amb <code>throw</code>. Llegeix el cos amb <code>json()</code>.</li>
+    <li>Crea els botons del teclat a partir de l'array rebut, amb <code>createElement</code>, com fins ara. La constant amb les lletres escrites a mà ha de desaparèixer.</li>
+    <li>Mentre l'alfabet no ha arribat, no es pot començar cap partida: el formulari de la paraula ha d'estar desactivat.</li>
+    <li>Si no es pot llegir el fitxer, captura l'error amb <code>try...catch</code> i mostra un missatge a la pàgina (no un <code>alert</code>). Sense teclat no es pot jugar, així que el formulari continua desactivat.</li>
+  </ol>
+  <p class="avis">Obre el joc amb Live Server. Si l'obres directament des de la carpeta (<code>file://</code>), <code>fetch</code> no pot llegir el fitxer i el joc mostrarà el missatge d'error.</p>
+  <p>Per provar els tres idiomes, canvia l'idioma preferit del navegador (a Chrome i a Firefox: Configuració, Idiomes) i torna a obrir el joc des de la pantalla inicial, que és on es llegeix <code>navigator.language</code>.</p>
+
+  <!-- ===== REQUISITS ===== -->
+  <h2>Requisits tècnics</h2>
+  <ul>
+    <li>El compte enrere es fa amb <code>setInterval</code> i s'atura amb <code>clearInterval</code>. No es pot fer amb <code>setTimeout</code> encadenats.</li>
+    <li>L'alfabet es llegeix amb <code>fetch</code> i <code>async/await</code>, no amb <code>then</code>.</li>
+    <li>Cada funció nova ha d'estar comentada.</li>
+    <li>Es mantenen tots els criteris d'acceptació del RA3: res d'<code>innerHTML</code> ni <code>insertAdjacentHTML</code>, capes separades (HTML, CSS i JavaScript), estructura de carpetes amb <code>index.html</code> a l'arrel, cap error a la consola i botons de les lletres creats amb <code>createElement</code>.</li>
+  </ul>
+
+  <!-- ===== AMPLIACIONS ===== -->
+  <h2>Ampliació opcional</h2>
+  <ul>
+    <li><strong>Els últims segons.</strong> Quan queden 10 segons o menys, el rellotge canvia de color. Fes-ho afegint una classe, no amb la propietat <code>style</code>.</li>
+  </ul>
+
+  <!-- ===== PROVES ===== -->
+  <h2>Pla de proves</h2>
+  <p>Comprova que el joc passa totes aquestes proves en dos navegadors diferents (per exemple, Chrome i Firefox).</p>
+  <table>
+    <thead><tr><th>#</th><th>Acció</th><th>Resultat esperat</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Obrir el joc amb el navegador en català</td><td>El teclat té 27 lletres, amb la <code>Ç</code>. El rellotge diu <code>02:00</code></td></tr>
+      <tr><td>2</td><td>Canviar el navegador a castellà i tornar a entrar des de la pantalla inicial</td><td>27 lletres, amb la <code>Ñ</code></td></tr>
+      <tr><td>3</td><td>Canviar-lo a anglès</td><td>26 lletres</td></tr>
+      <tr><td>4</td><td>Canviar-lo a un altre idioma (per exemple, francès)</td><td>Es carrega l'alfabet anglès: 26 lletres</td></tr>
+      <tr><td>5</td><td>Canviar el nom d'un fitxer de <code>res/</code> i tornar a entrar</td><td>Surt un missatge a la pàgina, no hi ha teclat i no es pot començar cap partida. Torna a posar el nom correcte</td></tr>
+      <tr><td>6</td><td>Començar una partida</td><td>El rellotge comença a <code>02:00</code> i baixa cada segon</td></tr>
+      <tr><td>7</td><td>Deixar passar els 2 minuts</td><td>A <code>00:00</code> es mostra la paraula, el panell es posa vermell, el total de partides augmenta en 1 i el teclat es desactiva. El rellotge no continua baixant</td></tr>
+      <tr><td>8</td><td>Començar una partida nova</td><td>El rellotge torna a <code>02:00</code></td></tr>
+      <tr><td>9</td><td>Guanyar una partida abans d'acabar el temps</td><td>El rellotge s'atura on era i la partida es compta una sola vegada</td></tr>
+      <tr><td>10</td><td>Perdre una partida per errades abans d'acabar el temps</td><td>El rellotge s'atura i la partida es compta una sola vegada</td></tr>
+      <tr><td>11</td><td>Revisar la consola durant totes les proves</td><td>No hi ha cap error</td></tr>
+    </tbody>
+  </table>
+
+</body>
+</html>

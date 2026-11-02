@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RA7 · Activitats</title>
+  <style>
+    :root {
+      --text: #212529;
+      --suau: #6c757d;
+      --vora: #dee2e6;
+      --fons: #ffffff;
+      --fons-targeta: #f8f9fa;
+      --principal: #1971c2;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text: #e9ecef;
+        --suau: #adb5bd;
+        --vora: #495057;
+        --fons: #1e1f22;
+        --fons-targeta: #2b2d31;
+        --principal: #74c0fc;
+      }
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      line-height: 1.5;
+      color: var(--text);
+      background: var(--fons);
+      max-width: 820px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    h1 { margin-bottom: 0.25rem; }
+    h2 { margin-top: 2.5rem; border-bottom: 2px solid var(--vora); padding-bottom: 0.25rem; }
+    .subtitol { color: var(--suau); margin-top: 0; }
+    code { font-family: ui-monospace, Consolas, monospace; background: var(--fons-targeta); padding: 0.05rem 0.3rem; border-radius: 3px; }
+
+    .avis {
+      border-left: 4px solid var(--principal);
+      padding: 0.5rem 1rem;
+      background: var(--fons-targeta);
+    }
+
+    /* ===== LLISTA D'ACTIVITATS ===== */
+    .activitats {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .activitat {
+      border: 1px solid var(--vora);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      background: var(--fons-targeta);
+    }
+
+    .activitat h3 { margin: 0 0 0.25rem; }
+    .activitat p { margin: 0.25rem 0; }
+    .fitxa { color: var(--suau); font-size: 0.95rem; }
+
+    .enllacos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .enllacos a {
+      padding: 0.35rem 0.9rem;
+      border: 1px solid var(--principal);
+      border-radius: 6px;
+      color: var(--principal);
+      text-decoration: none;
+    }
+
+    .enllacos a.principal {
+      background: var(--principal);
+      color: var(--fons);
+    }
+
+    .enllacos a:hover { filter: brightness(1.15); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <p class="subtitol">DSAW · Mòdul 0612. Desenvolupament web en entorn client</p>
+    <h1>RA7. Comunicació asíncrona</h1>
+    <p>Activitats d'aprenentatge sobre callbacks, promeses, <code>async/await</code> i <code>fetch</code>. Fes-les en ordre: cada una es basa en les anteriors.</p>
+  </header>
+
+
+  <!-- ===== ACTIVITATS DE PREDICCIÓ ===== -->
+  <h2>Endevina què passa</h2>
+  <p>No has de programar: llegeixes cada fragment de codi, prediu el que sortirà a la consola, l'executes i comproves la solució.</p>
+
+  <ul class="activitats">
+    <li class="activitat">
+      <h3>1. Què sortirà per la consola?</h3>
+      <p>En quin ordre s'executa un codi que barreja codi síncron, temporitzadors, callbacks, promeses i <code>async/await</code>.</p>
+      <p class="fitxa">50 min + 10 min de repte opcional · Bàsica</p>
+      <div class="enllacos">
+        <a class="principal" href="A1-codi/index.html">Obre l'activitat</a>
+      </div>
+    </li>
+
+    <li class="activitat">
+      <h3>2. Endevina el fetch</h3>
+      <p>Peticions amb <code>fetch</code> i <code>async/await</code>: llegir un fitxer JSON i consultar els endpoints de PokéAPI. La resposta, els dos <code>await</code>, <code>ok</code> i <code>status</code>, el 404 i els errors de xarxa, <code>finally</code>, <code>json()</code> i diverses peticions seguides.</p>
+      <p class="fitxa">55 min + 10 min de repte opcional · Bàsica-mitjana</p>
+      <div class="enllacos">
+        <a class="principal" href="A2-codi/index.html">Obre l'activitat</a>
+      </div>
+    </li>
+  </ul>
+
+  <!-- ===== PRÀCTICA ===== -->
+  <h2>Pràctica</h2>
+  <p>Has de programar sobre el teu joc del RA3. Llegeix l'enunciat i treballa a la branca <code>asyncron</code> del teu repositori.</p>
+
+  <ul class="activitats">
+    <li class="activitat">
+      <h3>3. Endevina la paraula: temps i idiomes</h3>
+      <p>Afegeix al joc del RA3 un compte enrere de 2 minuts amb <code>setInterval</code> i <code>clearInterval</code>, i crea el teclat amb l'alfabet que llegeixes d'un fitxer JSON segons l'idioma del navegador.</p>
+      <p class="fitxa">3 h · Mitjana</p>
+      <div class="enllacos">
+        <a class="principal" href="A3-joc/index.html">Obre l'enunciat</a>
+      </div>
+    </li>
+  </ul>
+
+</body>
+</html>
