@@ -532,6 +532,7 @@ def crear_usuari(request):
         return redirect('llista_usuaris')   # Redirigeix per name de url
     return render(request, 'formulari.html', {})
 ```
+
 ---
 
 ## 9. Plantilles — Templates
