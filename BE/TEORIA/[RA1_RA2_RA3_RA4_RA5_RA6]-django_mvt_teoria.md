@@ -210,7 +210,6 @@ git status
 
 # 3. Afegir fitxers al staging area (preparat per guardar)
 git add nom_fitxer.py
-git add .   # Afegir tots els fitxers modificats
 
 # 4. Guardar els canvis amb un missatge descriptiu
 git commit -m "Afegit model de producte i migracions"
