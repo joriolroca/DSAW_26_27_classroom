@@ -202,8 +202,8 @@ git config --global user.email "el_vostre@email.com"
 ### Flux de treball habitual
 
 ```bash
-# 1. Inicialitzar un repositori nou
-git init
+# 1. Colnar un repositori nou
+git clone < url-repositori >
 
 # 2. Veure l'estat actual dels fitxers
 git status
