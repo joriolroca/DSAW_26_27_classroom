@@ -1360,7 +1360,7 @@ Django porta el suport de sessions activat per defecte (`django.contrib.sessions
 def afegir_al_carret(request, producte_id):
     carret = request.session.get('carret', [])   # Llista buida si no existeix
     carret.append(producte_id)
-    request.session['carret'] = carret
+    request.session['carret'] = carret          # Cal tornar-la a assignar perquè Django desi el canvi
     return redirect('veure_carret')
 
 def veure_carret(request):
@@ -1458,6 +1458,8 @@ def panell_professor(request):
         raise PermissionDenied("Només els professors poden accedir aquí")
     return render(request, 'nom_app/panell_professor.html')
 ```
+
+> Quan es llança `PermissionDenied`, Django respon amb un **403 Forbidden**: l'usuari ha iniciat sessió, però no té permís. És diferent de `@login_required`, que, si l'usuari no ha iniciat sessió, el **redirigeix** a la pàgina de login.
 
 ---
 
