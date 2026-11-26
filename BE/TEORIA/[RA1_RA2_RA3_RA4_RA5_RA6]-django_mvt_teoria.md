@@ -176,6 +176,31 @@ Engegar el contenidor:
 ```bash
 docker compose up -d
 ```
+Aturar contenidor:
+
+```bash
+docker compose stop
+```
+
+Eliminar contenidor:
+
+```bash
+docker compose down
+```
+Aturar i eliminar contenidor i eliminar volums:
+
+```bash
+docker compose down -v
+```
+
+#### Resum comandes Docker
+
+| Comanda | Contenidors | Xarxes | Volums |
+|---|---|---|---|
+| `docker compose up -d` | es creen i s'engeguen | es creen (si no existeixen) | es creen o es reutilitzen |
+| `docker compose stop` | aturats (es conserven) | es conserven | es conserven |
+| `docker compose down` | eliminats | eliminades | es conserven |
+| `docker compose down -v` | eliminats | eliminades | **eliminats** |
 
 ---
 
@@ -202,7 +227,7 @@ git config --global user.email "el_vostre@email.com"
 ### Flux de treball habitual
 
 ```bash
-# 1. Colnar un repositori nou
+# 1. Clonar un repositori nou
 git clone < url-repositori >
 
 # 2. Veure l'estat actual dels fitxers
@@ -258,15 +283,20 @@ db.sqlite3
 
 ## 4. Estructura del projecte
 
-Quan es crea un projecte Django s'usa la comanda:
+Quan es crea un projecte Django s'usa una de les segÜents comandes:
 
 ```bash
+# Comanda recomanasda
+django-admin startproject nom_projecte
+
+# Comanda alternativa
 django-admin startproject nom_projecte .
 ```
 
-> El punt `.` al final crea el projecte al directori actual sense crear una subcarpeta extra.
+> - **Sense punt:** es crea una carpeta `nom_projecte/` i, a dins, `manage.py` i una subcarpeta `nom_projecte/` amb la configuració.
+> - **Amb punt (`.`):** `manage.py` i la carpeta de configuració `nom_projecte/` es creen directament al directori actual, sense la carpeta exterior.  
 
-Estructura resultant:
+Estructura resultant després d'usar la comanda sense punt:
 
 ```
 nom_projecte/
