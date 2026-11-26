@@ -230,13 +230,7 @@ git checkout -b feature/login
 git branch
 
 # Canviar a una branca existent
-git checkout main
-
-# Fusionar una branca amb main (des de main)
-git merge feature/login
-
-# Pujar una branca nova al remot
-git push -u origin feature/login
+git switch main
 ```
 
 **Convenció de noms de branques:**
