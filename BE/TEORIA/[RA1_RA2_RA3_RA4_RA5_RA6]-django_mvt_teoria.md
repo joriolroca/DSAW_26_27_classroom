@@ -215,7 +215,7 @@ git add nom_fitxer.py
 git commit -m "Afegit model de producte i migracions"
 
 # 5. Pujar els canvis al repositori remot (GitHub)
-git push origin nom-branca
+git push
 ```
 
 ### Treball amb branques
