@@ -12,7 +12,7 @@
     - **Docker Desktop** per Windows
 3. Instal·lar Python3
     - Les comandes de python en Linux son **python3 -m...**.
-    - Les comandes de Python en Windows son **py3 o py -m...**
+    - Les comandes de Python en Windows son **py -3.12 -m...** (per exemple, `py -3.12 -m venv venv`). La comanda `py3` no existeix.
 4. Instal·lar Virtualenv (venv)
     - Es pot crear l'entorn en una carpeta normal **venv**
     - Es pot crear l'entorn en una carpeta oculta **.venv**

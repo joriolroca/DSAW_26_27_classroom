@@ -86,6 +86,7 @@ divisio_real = 7 / 2          # 3.5
 divisio_entera = 7 // 2       # 3  (equivalent a / entre int a Java)
 residu = 7 % 2                # 1
 potencia = 2 ** 3             # 8
+arrodonit = round(30.2512, 2)  # 30.25 (arrodonir a 2 decimals)
 
 # Assignació
 total = 0
