@@ -150,8 +150,8 @@ pip freeze > requirements.txt
 ### Instal·lació manual de les dependències
 
 ```bash
-pip install django==5.1
-pip install psycopg2-binary
+python3 -m pip install django==5.1
+python3 -m pip install psycopg2-binary
 ```
 
 ### Docker per a PostgreSQL en local
