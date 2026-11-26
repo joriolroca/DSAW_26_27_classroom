@@ -340,7 +340,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app1.apps.App1Config',    # ← La nostra aplicació
+    'app1.apps.App1Config',    # ← La nostra aplicació. El nom App1 és teÒric, depèn del nom de l'aplicació que li hagueu posat (mirar punt 6)
 ]
 ```
 
